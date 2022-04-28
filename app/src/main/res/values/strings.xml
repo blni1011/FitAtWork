@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Fit@Work</string>
+    <string name="nav_exercices">Übungen</string>
+    <string name="nav_history">Verlauf</string>
+    <string name="nav_stats">Leaderboard</string>
+    <string name="nav_profile">Profil</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_login">Login</string>
+    <string name="nav_logout">Logout</string>
+    <string name="navdrawer_open">Navigation öffnen</string>
+    <string name="navdrawer_close">Navigation schließen</string>
 </resources>
