@@ -5,16 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="40dp"
     tools:context=".LoginActivity">
 
     <include layout="@layout/toolbar"/>
 
+
     <EditText
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="190dp"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/custom_profile_icon"
         android:drawablePadding="12dp"
@@ -29,6 +31,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="60dp"
