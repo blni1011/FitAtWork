@@ -1,7 +1,6 @@
 package eu.iums.fitwork;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class LoginActivity extends AppCompatActivity {

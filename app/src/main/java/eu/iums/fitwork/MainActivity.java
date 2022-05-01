@@ -53,16 +53,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.nav_exercises:
+                Intent intent_exercises = new Intent(this, ExerciseActivity.class);
+                startActivity(intent_exercises);
                 break;
             case R.id.nav_history:
+                Intent intent_history = new Intent(this, HistoryActivity.class);
+                startActivity(intent_history);
                 break;
             case R.id.nav_stats:
+                Intent intent_stats = new Intent(this, LeaderboardActivity.class);
+                startActivity(intent_stats);
                 break;
             case R.id.nav_profile:
+                Intent intent_profile = new Intent(this, ProfileActivity.class);
+                startActivity(intent_profile);
                 break;
             case R.id.nav_login:
+                Intent intent_login = new Intent(this, LoginActivity.class);
+                startActivity(intent_login);
                 break;
             case R.id.nav_logout:
+
                 break;
             case R.id.nav_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);

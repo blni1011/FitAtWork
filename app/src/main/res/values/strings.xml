@@ -9,4 +9,5 @@
     <string name="nav_logout">Logout</string>
     <string name="navdrawer_open">Navigation öffnen</string>
     <string name="navdrawer_close">Navigation schließen</string>
+    <string name="name_user">[Name]</string>
 </resources>
