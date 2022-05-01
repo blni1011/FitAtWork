@@ -1,9 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".SettingsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/empty1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_titel_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Benachrichtigungen"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/switch_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="     Pausenalarm"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Switch
+                android:id="@+id/switch_drink_reminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="     Erinnerungen Trinkpause"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/empty2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/separator1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_color_secondary_dark" />
+
+            <TextView
+                android:id="@+id/empty3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_titel_leaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Leaderboard"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/switch_leaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="     Teilnahme"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/empty4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/separator2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_color_secondary_dark" />
+
+            <TextView
+                android:id="@+id/empty5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_titel_impressum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Impressum"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/impressum_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\n     Angaben gemäß § 5 TMG\n \n     VSM Info Projekt\n     Hoffstraße 3\n     76133 Karlsruhe\n\n     Vertreten durch:\n     VSM Info Projekt\n\n     Kontakt:\n     Telefon: 0721 -9250\n     E-Mail: Mustermann@h-ka.de" />
+
+            <TextView
+                android:id="@+id/empty6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/separator3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_color_secondary_dark" />
+
+            <TextView
+                android:id="@+id/empty7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_titel_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Feedback"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/feedback_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:minHeight="48dp"
+                android:text="   Ihre Verbesserung..."
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/feedback_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="     Mithilfe Ihres Feedbacks ist es uns möglich, die App für Sie \n     immer weiter zu verbessern. Vielen Dank" />
+
+            <TextView
+                android:id="@+id/empty8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/separator4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_color_secondary_dark" />
+
+            <TextView
+                android:id="@+id/empty9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_titel_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Mehr Informationen"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/information_titel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\n     Auftraggeber:" />
+
+            <TextView
+                android:id="@+id/information_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:minHeight="48dp"
+                android:text="https://www.h-ka.de/iums/profil?mdrv=www.h-ka.de&amp;cHash=6c366e53e1ac74781909582478c4e546" />
+
+            <TextView
+                android:id="@+id/empty10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="@color/main_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/separator5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_color_secondary_dark" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
