@@ -64,7 +64,8 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                tools:ignore="ExtraText">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -245,8 +246,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_height"
-                    android:rotation="90"
+                    android:src="@drawable/ic_weight"
                     app:tint="@color/main_color_primary" />
 
                 //Gewicht

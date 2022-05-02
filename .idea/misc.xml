@@ -14,6 +14,7 @@
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/custom_profil_icon.xml" value="0.222" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_burgermenu.xml" value="0.141" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_edit.xml" value="0.141" />
+        <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_element_6.xml" value="0.265" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_fitpoint.xml" value="0.1" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_login.xml" value="0.222" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_login_password.xml" value="0.222" />
@@ -25,11 +26,12 @@
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_profile.xml" value="0.222" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_register.xml" value="0.141" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_steps.xml" value="0.141" />
+        <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/drawable/ic_weight.xml" value="0.171" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_exercise.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_leaderboard.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_main.xml" value="0.1762917933130699" />
-        <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_profile.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_profile.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/activity_settings.xml" value="0.33695652173913043" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/header.xml" value="0.33" />
         <entry key="..\:/Users/rockf/AndroidStudioProjects/FitAtWork/app/src/main/res/layout/toolbar.xml" value="0.33" />
