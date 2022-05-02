@@ -16,4 +16,5 @@
     <string name="height">[Größe]</string>
     <string name="weight">[Gewicht]</string>
     <string name="steps">[Schritte]</string>
+    <string name="fitpoints">[Fitpoints]</string>
 </resources>
