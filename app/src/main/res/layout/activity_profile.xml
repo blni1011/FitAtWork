@@ -31,10 +31,15 @@
                 android:padding="15dp"
                 tools:ignore="ExtraText">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="110dp"
                     android:layout_height="110dp"
-                    android:src="@drawable/logo_info_app" />
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:elevation="5dp"
+                    app:srcCompat="@drawable/logo_info_app" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -328,11 +333,12 @@
                     android:background="@drawable/custom_button"
                     android:clickable="true"
                     android:drawableLeft="@drawable/ic_edit"
+                    android:drawableTint="@drawable/button_pressed_color"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="Profil bearbeiten"
-                    android:textColor="@color/main_color_primary"
+                    android:textColor="@drawable/button_pressed_color"
                     android:textSize="18dp" />
 
                 <TextView
@@ -343,11 +349,12 @@
                     android:background="@drawable/custom_button"
                     android:clickable="true"
                     android:drawableLeft="@drawable/ic_login_password_focused"
+                    android:drawableTint="@drawable/button_pressed_color"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="Passwort ändern"
-                    android:textColor="@color/main_color_primary"
+                    android:textColor="@drawable/button_pressed_color"
                     android:textSize="18dp" />
 
             </LinearLayout>

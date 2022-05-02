@@ -18,6 +18,7 @@
         android:gravity="right"
         android:drawableRight="@drawable/ic_fitpoint"
         android:drawableTint="@android:color/white"
-        android:drawablePadding="5dp"/>
+        android:drawablePadding="5dp"
+        android:clickable="true"/>
 
 </androidx.appcompat.widget.Toolbar>
