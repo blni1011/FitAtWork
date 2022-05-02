@@ -34,29 +34,32 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/settings_titel_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   Benachrichtigungen"
+                android:text="Benachrichtigungen"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Switch
+                android:layout_marginStart="15dp"
                 android:id="@+id/switch_alert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:text="     Pausenalarm"
+                android:text="Pausenalarm"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Switch
+                android:layout_marginStart="15dp"
                 android:id="@+id/switch_drink_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:text="     Erinnerungen Trinkpause"
+                android:text="Erinnerungen Trinkpause"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -84,21 +87,23 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/settings_titel_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   Leaderboard"
+                android:text="Leaderboard"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Switch
+                android:layout_marginStart="15dp"
                 android:id="@+id/switch_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:text="     Teilnahme"
+                android:text="Teilnahme"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -126,20 +131,30 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/settings_titel_impressum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   Impressum"
+                android:text="Impressum"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/impressum_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\n     Angaben gemäß § 5 TMG\n \n     VSM Info Projekt\n     Hoffstraße 3\n     76133 Karlsruhe\n\n     Vertreten durch:\n     VSM Info Projekt\n\n     Kontakt:\n     Telefon: 0721 -9250\n     E-Mail: Mustermann@h-ka.de" />
+                android:text="\nAngaben gemäß § 5 TMG\n
+                \nVSM Info Projekt
+                \nHoffstraße 3
+                \n76133 Karlsruhe
+                \n\nVertreten durch:
+                \nVSM Info Projekt
+                \n\nKontakt:
+                \nTelefon: 0721 -9250
+                \nE-Mail: Mustermann@h-ka.de" />
 
             <TextView
                 android:id="@+id/empty6"
@@ -166,16 +181,18 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/settings_titel_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   Feedback"
+                android:text="Feedback"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
+                android:layout_marginStart="15dp"
                 android:id="@+id/feedback_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,14 +200,15 @@
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
-                android:text="   Ihre Verbesserung..."
+                android:text="Ihre Verbesserung..."
                 android:textSize="16sp" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/feedback_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="     Mithilfe Ihres Feedbacks ist es uns möglich, die App für Sie \n     immer weiter zu verbessern. Vielen Dank" />
+                android:text="Mithilfe Ihres Feedbacks ist es uns möglich, die App für Sie \nimmer weiter zu verbessern. Vielen Dank" />
 
             <TextView
                 android:id="@+id/empty8"
@@ -217,22 +235,25 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/settings_titel_information"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   Mehr Informationen"
+                android:text="Mehr Informationen"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/information_titel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\n     Auftraggeber:" />
+                android:text="\nAuftraggeber:" />
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/information_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
