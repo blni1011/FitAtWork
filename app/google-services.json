@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "898715041025",
+    "project_id": "fitatwork-6adb0",
+    "storage_bucket": "fitatwork-6adb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898715041025:android:440c70c4f3a8bb743e6f00",
+        "android_client_info": {
+          "package_name": "eu.iums.fitwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898715041025-sg5s83eujqd677bd436u4j8hfhula0rd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8zWyzztI-WQpArB42gykzfN27msQ18Ww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898715041025-sg5s83eujqd677bd436u4j8hfhula0rd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
