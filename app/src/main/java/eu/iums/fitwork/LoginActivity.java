@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView signIn;
     EditText username;
     EditText password;
+
+    TextView register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,16 @@ public class LoginActivity extends AppCompatActivity {
                 username = findViewById(R.id.username);
                 password = findViewById(R.id.password);
                 loginUser(username.getText().toString(), password.getText().toString());
+
+            }
+        });
+
+        register = findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent register = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(register);
             }
         });
     }

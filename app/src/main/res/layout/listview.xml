@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:textSize="8pt"
-        android:textColor="@color/black"
+        android:textColor="@color/darker_grey"
         android:layout_marginTop="5dp"
         android:layout_marginStart="15dp" />
 
