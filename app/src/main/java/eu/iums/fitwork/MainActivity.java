@@ -9,9 +9,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Toolbar
         setSupportActionBar(toolbar);
+
+        //FirebaseAuth
+        mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() == null) {
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_profile).setVisible(false);
+        } else {
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.nav_login).setVisible(false);
+        }
 
         //Navigation Drawer
         navigationView.bringToFront();
