@@ -17,4 +17,5 @@
     <string name="weight">[Gewicht]</string>
     <string name="steps">[Schritte]</string>
     <string name="fitpoints">[Fitpoints]</string>
+    <string name="break_time">[Pausenzeit]</string>
 </resources>
