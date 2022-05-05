@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     private FirebaseAuth mAuth;
+    private TextView fitpointsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+        fitpointsTextView = findViewById(R.id.fitpoints);
 
         //Toolbar
         setSupportActionBar(toolbar);
@@ -90,6 +94,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent_login);
                 break;
             case R.id.nav_logout:
+                FirebaseUser user = mAuth.getCurrentUser();
+                if(user != null) {
+                    mAuth.signOut();
+                }
 
                 break;
             case R.id.nav_settings:
@@ -99,5 +107,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser fbUser = mAuth.getCurrentUser();
+
+        if(fbUser != null) {
+            User user = new User(fbUser.getUid());
+            fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
+        }
     }
 }

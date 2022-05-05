@@ -13,8 +13,8 @@ public class DBHelper {
         mDatabase = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference(dbReference);
     }
     //User
-    public void writeNewUser(String userId, String username, String name, String lastname, String email, boolean leaderBoard) {
-        User user = new User(username, name, lastname, email, leaderBoard);
+    public void writeNewUser(String userId, String username, String name, String lastname, String email, int fitPoints) {
+        User user = new User(username, name, lastname, email, fitPoints);
 
         mDatabase.child(userId).setValue(user);
     }
