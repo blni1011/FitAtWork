@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitWork">
         <activity
+            android:name=".ExerciseBrainTrainingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExerciseSportActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
@@ -47,7 +53,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlertReceiver"/>
+        <receiver android:name=".AlertReceiver" />
     </application>
 
 </manifest>
