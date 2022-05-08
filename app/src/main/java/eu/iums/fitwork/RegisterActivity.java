@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     DBHelper dbhelper;
 
     private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
 
         dbhelper = new DBHelper("user");
 
@@ -80,10 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Bitte wiederholen Sie Ihr Passwort.", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (repeatPassword.getText().toString().matches(password.getText().toString())) {
-                    FirebaseUser user = mAuth.getCurrentUser();
                     //User registrieren
-                    if (user == null) {
+                    if (firebaseUser == null) {
                         registerUser(email.getText().toString(), password.getText().toString());
+                        dbhelper.writeNewUser(username.getText().toString(), name.getText().toString(), lastName.getText().toString(), email.getText().toString());
+                        Log.d("Firebase", "anlegen des Users in der Dqatenbank erfolgreich!");
                     } else {
                         Toast.makeText(RegisterActivity.this, "Dieser Benutzer exisitert bereits!", Toast.LENGTH_SHORT).show();
                     }
@@ -104,14 +108,14 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            firebaseUser = mAuth.getCurrentUser();
                             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(username.getText().toString()).build();
-                            user.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            firebaseUser.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    //dbhelper.writeNewUser(user.getUid(), user.getDisplayName(), name.getText().toString(), lastName.getText().toString(), user.getEmail(), 0);
-                                    Toast.makeText(RegisterActivity.this, "Registrierung erfolgreich, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                                    Log.d("Firebase", "Registrierung auf Firebase und setzen des Username erfolgreich!");
+                                    Toast.makeText(RegisterActivity.this, "Registrierung erfolgreich, " + firebaseUser.getDisplayName(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {

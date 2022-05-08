@@ -26,12 +26,12 @@ public class User {
 
     private DatabaseReference dbReference;
 
-    public User(String username, String name, String lastName, String email, int fitPoints) {
+    public User(String username, String name, String lastName, String email) {
         this.username = username;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.fitPoints = fitPoints;
+        this.fitPoints = 0;
     }
     public User(String userID) {
         dbReference = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");

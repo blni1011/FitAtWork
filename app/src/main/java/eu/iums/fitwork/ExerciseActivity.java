@@ -25,7 +25,7 @@ public class ExerciseActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Übungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Button1
+        //Button1 - Sport
         Button btnexercisesport = findViewById(R.id.button_exercise_sport);
         btnexercisesport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +36,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
 
 
-        //Button2
+        //Button2 - Brain
         Button btnexercisebrain = findViewById(R.id.button_exercise_brain);
         btnexercisebrain.setOnClickListener(new View.OnClickListener() {
             @Override

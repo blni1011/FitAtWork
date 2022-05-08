@@ -13,12 +13,22 @@ public class DBHelper {
         mDatabase = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference(dbReference);
     }
     //User
-    public void writeNewUser(String userId, String username, String name, String lastname, String email, int fitPoints) {
-        User user = new User(username, name, lastname, email, fitPoints);
-
-        mDatabase.child(userId).setValue(user);
+    public void writeNewUser(String username, String name, String lastname, String email) {
+        mDatabase.child(username).child("Name").setValue(name);
+        mDatabase.child(username).child("Nachname").setValue(lastname);
+        mDatabase.child(username).child("Email").setValue(email);
+        mDatabase.child(username).child("Fitpoints").setValue(0);
     }
-    public void deleteUser(String userId) {
-        mDatabase.child("users").child(userId).removeValue();
+    public void deleteUser(String email) {
+        mDatabase.child("users").child(email).removeValue();
+    }
+
+    public void writeTest() {
+        mDatabase.child("TestChild").setValue("TestValue");
+    }
+
+    public boolean checkUserExists(String username) {
+
+        return false;
     }
 }
