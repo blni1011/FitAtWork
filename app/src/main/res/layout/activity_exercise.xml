@@ -7,9 +7,13 @@
     tools:context=".ExerciseActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <include
             android:id="@+id/toolbar"
@@ -25,25 +29,44 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Button
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/button_exercise_sport"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="20dp"
+            android:layout_height="190dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp"
-            android:foreground="@drawable/image_k_rperliche__bungen"
-            android:text="Button" />
+            app:strokeColor="@color/main_color_primary"
+            app:strokeWidth="5dp"
+            android:padding="5dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            android:clickable="true"
+            app:srcCompat="@drawable/image_k_rperliche__bungen" />
 
-        <Button
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/button_exercise_brain"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="20dp"
+            android:layout_height="190dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp"
-            android:foreground="@drawable/image_gehirnjogging"
-            android:text="Button" />
+            app:strokeColor="@color/main_color_primary"
+            app:strokeWidth="5dp"
+            android:padding="5dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            android:clickable="true"
+            app:srcCompat="@drawable/image_gehirnjogging" />
 
     </LinearLayout>
 

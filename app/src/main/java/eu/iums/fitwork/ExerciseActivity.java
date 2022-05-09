@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 public class ExerciseActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -26,7 +28,7 @@ public class ExerciseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Button1 - Sport
-        Button btnexercisesport = findViewById(R.id.button_exercise_sport);
+        ShapeableImageView btnexercisesport = findViewById(R.id.button_exercise_sport);
         btnexercisesport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +39,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
 
         //Button2 - Brain
-        Button btnexercisebrain = findViewById(R.id.button_exercise_brain);
+        ShapeableImageView btnexercisebrain = findViewById(R.id.button_exercise_brain);
         btnexercisebrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
