@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,22 +30,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     private FirebaseAuth mAuth;
     private TextView fitpointsTextView;
+    private TextView usernameTextView;
+    private UserDBHelper userDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.i("MainActivity", "MainViewModel ist initialisiert");
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         fitpointsTextView = findViewById(R.id.fitpoints);
-
-        //Toolbar
-        setSupportActionBar(toolbar);
+        usernameTextView = findViewById(R.id.Name);
 
         //FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
+
+        //User-DB
+        userDB = new UserDBHelper();
 
         if(mAuth.getCurrentUser() == null) {
             Menu menu = navigationView.getMenu();
@@ -51,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_login).setVisible(false);
         }
+
+        //Toolbar
+        setSupportActionBar(toolbar);
 
         //Navigation Drawer
         navigationView.bringToFront();
@@ -115,8 +127,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser fbUser = mAuth.getCurrentUser();
 
         if(fbUser != null) {
-            User user = new User(fbUser.getUid());
-            fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
+            fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
+        } else {
+            Log.d("Firebase", "Problem beim automatischen einloggen!");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUser fbUser = mAuth.getCurrentUser();
+        if(fbUser != null) {
+            fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
+        } else {
+            Log.d("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
+            fitpointsTextView.setVisibility(View.INVISIBLE);
         }
     }
 }

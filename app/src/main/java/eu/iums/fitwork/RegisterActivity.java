@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText password;
     EditText repeatPassword;
 
-    DBHelper dbhelper;
+    UserDBHelper dbhelper;
 
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
@@ -43,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
-        dbhelper = new DBHelper("user");
+        dbhelper = new UserDBHelper();
 
         name = findViewById(R.id.name);
         lastName = findViewById(R.id.lastname);
