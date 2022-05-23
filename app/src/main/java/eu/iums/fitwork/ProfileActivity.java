@@ -43,5 +43,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStart();
         usernameField.setText(user.getDisplayName());
         nameField.setText(userDBHelper.getName(user.getDisplayName()));
+        lastNameField.setText(userDBHelper.getLastName(user.getDisplayName()));
     }
 }

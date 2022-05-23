@@ -13,7 +13,7 @@
         android:layout_width="71dp"
         android:layout_height="71dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/Name"
+        app:layout_constraintBottom_toTopOf="@id/NameHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/logo_info_app" />
 
@@ -40,12 +40,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/Name"
+        android:id="@+id/NameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:text=" "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/Greetings" />
 </androidx.constraintlayout.widget.ConstraintLayout>

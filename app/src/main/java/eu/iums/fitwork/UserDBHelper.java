@@ -20,6 +20,8 @@ public class UserDBHelper {
     private String lastName = "Nachname";
     private int fitpoints;
 
+    private User user;
+
     public UserDBHelper() {
         database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app");
         mDatabase = database.getReference("user");
@@ -27,10 +29,9 @@ public class UserDBHelper {
 
     //User
     public void writeNewUser(String username, String name, String lastname, String email) {
-        mDatabase.child(username).child("Name").setValue(name);
-        mDatabase.child(username).child("Nachname").setValue(lastname);
-        mDatabase.child(username).child("Email").setValue(email);
-        mDatabase.child(username).child("Fitpoints").setValue(0);
+        user = new User(username, name, lastName, email);
+
+        mDatabase.child(username).setValue(user);
     }
     public void deleteUser(String email) {
         mDatabase.child("users").child(email).removeValue();
@@ -46,6 +47,21 @@ public class UserDBHelper {
     }
     public String getName(String username) {
         mDatabase.child(username).child("Name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    lastName = snapshot.getValue(String.class);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
+            }
+        });
+        return lastName;
+    }
+    public String getLastName(String username) {
+        mDatabase.child(username).child("Nachname").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -74,11 +90,5 @@ public class UserDBHelper {
         });
 
         return fitpoints;
-    }
-    public FirebaseDatabase getDatabase() {
-        return database;
-    }
-    public void initDatabase() {
-
     }
 }

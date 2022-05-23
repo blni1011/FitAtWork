@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         fitpointsTextView = findViewById(R.id.fitpoints);
-        usernameTextView = findViewById(R.id.Name);
+        usernameTextView = findViewById(R.id.NameHeader);
 
         //FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
         } else {
             Log.d("Firebase", "Problem beim automatischen einloggen!");
+            //usernameTextView.setVisibility(View.INVISIBLE);
         }
     }
 

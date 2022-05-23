@@ -1,21 +1,32 @@
 package eu.iums.fitwork;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class LeaderboardActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class LeaderboardActivity extends AppCompatActivity{
 
     Toolbar toolbar;
+
+    RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
+    ArrayList<User> users;
+    UserDBHelper userDB;
+    DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,29 +39,39 @@ public class LeaderboardActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().setTitle("Leaderboard");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView ranks_list = (ListView) findViewById(R.id.listView);
+        //RecyclerView
+        recyclerView = findViewById(R.id.leaderboard_list);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        String[] modes = new String[] {"Fuß", "Fahrrad", "ÖPNV", "E-Scooter", "MIV-Fahrer", "MIV-Mitfahrer", "Sonstiges"};
-        ArrayList<String> modesList = new ArrayList<>();
-        modesList.addAll(Arrays.asList(modes));
+        database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");
+        users = new ArrayList<>();
+        recyclerAdapter = new RecyclerAdapter(this, users);
+        recyclerView.setAdapter(recyclerAdapter);
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.listview, R.id.textView, modesList);
 
-        ranks_list.setAdapter(listAdapter);
+        //Get Userslist from DB
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    User user = dataSnapshot.getValue(User.class);
+                    users.add(user);
+                    Collections.sort(users, new Comparator<User>() {
+                        @Override
+                        public int compare(User user1, User user2) {
+                            return Integer.valueOf(user2.getFitPoints()).compareTo(user1.getFitPoints());
+                        }
+                    });
+                }
+                recyclerAdapter.notifyDataSetChanged();
+            }
 
-        ranks_list.setOnItemClickListener(this);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        selectedMode = parent.getItemAtPosition(position).toString();
-        Intent setMode = new Intent(TransportationMode.this, MainActivity.class);
-        setMode.putExtra(KEY, selectedMode);
-        startActivity(setMode);
-    }*/
 }
