@@ -28,7 +28,7 @@
         app:srcCompat="@drawable/hka_logo_gesamt_v_weiss" />
 
     <TextView
-        android:id="@+id/Greetings"
+        android:id="@+id/header_greetings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -46,7 +46,8 @@
         android:layout_marginBottom="16dp"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:text=" "
+        android:text="Username"
+        android:layout_marginLeft="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/Greetings" />
+        app:layout_constraintStart_toEndOf="@id/header_greetings" />
 </androidx.constraintlayout.widget.ConstraintLayout>
