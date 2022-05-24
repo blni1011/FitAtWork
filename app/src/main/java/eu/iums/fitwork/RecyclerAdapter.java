@@ -9,20 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.imageview.ShapeableImageView;
-
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
     Context context;
     ArrayList<User> users;
-    private UserDBHelper userDB;
 
     public RecyclerAdapter(Context context, ArrayList<User> users) {
         this.context = context;
         this.users = users;
-        this.userDB = new UserDBHelper();
     }
 
     @NonNull
@@ -37,10 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         User user = users.get(position);
         holder.username.setText(user.getUsername());
         holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
-        holder.rank.setText(String.valueOf(position+1));
-        if (userDB.getProfilePicture(user.getUsername()) != null){
-            holder.profilepic.setImageBitmap(userDB.getProfilePicture(user.getUsername()));
-        }
+        holder.rank.setText(String.valueOf(position));
     }
 
     @Override
@@ -53,7 +46,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         TextView username;
         TextView fitPoints;
         TextView rank;
-        ShapeableImageView profilepic;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,7 +53,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             username = itemView.findViewById(R.id.cardview_username);
             fitPoints = itemView.findViewById(R.id.carview_points);
             rank = itemView.findViewById(R.id.cardview_rank);
-            profilepic = itemView.findViewById(R.id.cardview_profilepic);
         }
     }
 }

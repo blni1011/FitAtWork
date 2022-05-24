@@ -26,7 +26,7 @@
         android:drawableStart="@drawable/custom_profile_icon"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="E-Mail Adresse"
+        android:hint="Benutzername"
         android:inputType="textPersonName"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"

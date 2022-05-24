@@ -1,7 +1,5 @@
 package eu.iums.fitwork;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -9,30 +7,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class UserDBHelper {
 
     private final FirebaseDatabase database;
     private final DatabaseReference mDatabase;
-    private StorageReference storageReference;
-
     private String name = "Vorname";
     private String lastName = "Nachname";
     private int fitpoints;
-    private Bitmap profilePicture;
 
     public final String db_fitpoints = "fitPoints";
     public final String db_name = "name";
@@ -54,7 +43,6 @@ public class UserDBHelper {
 
         mDatabase.child(username).setValue(user);
     }
-
     public void deleteUser(String email) {
         mDatabase.child("users").child(email).removeValue();
     }
@@ -67,16 +55,14 @@ public class UserDBHelper {
 
         return false;
     }
-
     public String getName(String username) {
         mDatabase.child(username).child("Name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if(snapshot.exists()) {
                     lastName = snapshot.getValue(String.class);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
@@ -84,16 +70,14 @@ public class UserDBHelper {
         });
         return lastName;
     }
-
     public String getLastName(String username) {
         mDatabase.child(username).child("lastName").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if(snapshot.exists()) {
                     name = snapshot.getValue(String.class);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
@@ -101,17 +85,15 @@ public class UserDBHelper {
         });
         return name;
     }
-
-    public Integer getFitpoints(String username) {
+    public Integer getFitpoints(String username){
         mDatabase.child(username).child(db_fitpoints).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if(snapshot.exists()) {
                     fitpoints = snapshot.getValue(Integer.class);
                     Log.i("Datenbank", "Fitpoints geladen! Aktueller Stand " + fitpoints);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.i("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
@@ -119,26 +101,5 @@ public class UserDBHelper {
         });
 
         return fitpoints;
-    }
-
-    public Bitmap getProfilePicture(String userName) {
-        storageReference = FirebaseStorage.getInstance().getReference().child("users/" + userName + "/profile.jpg");
-        try {
-            final File localFile = File.createTempFile("profile_" + userName, "jpg");
-            storageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            profilePicture = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        }
-                    });
-        } catch (IOException e) {
-            Log.i("Profil", "Fehler beim Laden des Profilbilds");
-        }
-        if (profilePicture != null) {
-            return profilePicture;
-        } else {
-            return null;
-        }
     }
 }
