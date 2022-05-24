@@ -1,6 +1,9 @@
 package eu.iums.fitwork;
 
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -20,11 +23,18 @@ public class UserDBHelper {
     private String lastName = "Nachname";
     private int fitpoints;
 
+    public final String db_fitpoints = "fitPoints";
+    public final String db_name = "name";
+    public final String db_lastname = "lasName";
+    public final String db_email = "email";
+
     private User user;
+
 
     public UserDBHelper() {
         database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app");
         mDatabase = database.getReference("user");
+
     }
 
     //User
@@ -61,7 +71,7 @@ public class UserDBHelper {
         return lastName;
     }
     public String getLastName(String username) {
-        mDatabase.child(username).child("Nachname").addValueEventListener(new ValueEventListener() {
+        mDatabase.child(username).child("lastName").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -76,16 +86,17 @@ public class UserDBHelper {
         return name;
     }
     public Integer getFitpoints(String username){
-        mDatabase.child(username).child("Fitpoints").addValueEventListener(new ValueEventListener() {
+        mDatabase.child(username).child(db_fitpoints).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     fitpoints = snapshot.getValue(Integer.class);
+                    Log.i("Datenbank", "Fitpoints geladen! Aktueller Stand " + fitpoints);
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
+                Log.i("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
             }
         });
 

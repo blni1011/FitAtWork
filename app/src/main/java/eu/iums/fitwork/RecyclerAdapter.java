@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
-
     Context context;
     ArrayList<User> users;
 
@@ -34,6 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         User user = users.get(position);
         holder.username.setText(user.getUsername());
         holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
+        holder.rank.setText(String.valueOf(position));
     }
 
     @Override
@@ -45,12 +45,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         TextView username;
         TextView fitPoints;
+        TextView rank;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.cardview_username);
             fitPoints = itemView.findViewById(R.id.carview_points);
+            rank = itemView.findViewById(R.id.cardview_rank);
         }
     }
 }

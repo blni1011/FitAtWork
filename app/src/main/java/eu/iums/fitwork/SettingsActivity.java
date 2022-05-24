@@ -1,5 +1,6 @@
 package eu.iums.fitwork;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,11 +23,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
@@ -38,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     boolean alarm_state;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
+    private Switch leaderboard;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SELECTED_TIME = "time";
@@ -49,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         setContentView(R.layout.activity_settings);
         selected_time = (TextView) findViewById(R.id.selected_time);
         createNotificationChannel();
+
+        leaderboard = findViewById(R.id.switch_leaderboard);
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);

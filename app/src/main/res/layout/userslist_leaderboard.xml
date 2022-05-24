@@ -11,27 +11,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="1"
+               android:textSize="26sp"
+               android:id="@+id/cardview_rank"
+               android:layout_centerVertical="true"
+               android:textStyle="bold"
+               android:textColor="@color/main_color_primary"/>
             <TextView
                 android:id="@+id/cardview_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username "
-                android:textSize="26sp"/>
+                android:textSize="26sp"
+                android:layout_toEndOf="@id/cardview_rank"
+                android:layout_marginLeft="16dp"/>
             <TextView
                 android:id="@+id/carview_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="punkte"
                 android:textSize="20sp"
-                android:layout_marginLeft="8dp"/>
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
     </LinearLayout>
 
 

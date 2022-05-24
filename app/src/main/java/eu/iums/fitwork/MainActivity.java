@@ -10,7 +10,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import org.w3c.dom.Text;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -38,13 +43,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.i("MainActivity", "MainViewModel ist initialisiert");
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         fitpointsTextView = findViewById(R.id.fitpoints);
-        usernameTextView = findViewById(R.id.NameHeader);
+
+        // init header text view
+        View headerView = navigationView.getHeaderView(0);
+        usernameTextView = (TextView) headerView.findViewById(R.id.NameHeader);
 
         //FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //User-DB
         userDB = new UserDBHelper();
 
-        if(mAuth.getCurrentUser() == null) {
+        if (mAuth.getCurrentUser() == null) {
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_profile).setVisible(false);
@@ -71,11 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
     //Wenn BackButton benutzt wird, schließt sich Drawer und nicht App
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.nav_exercises:
                 Intent intent_exercises = new Intent(this, ExerciseActivity.class);
                 startActivity(intent_exercises);
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_logout:
                 FirebaseUser user = mAuth.getCurrentUser();
-                if(user != null) {
+                if (user != null) {
                     mAuth.signOut();
                 }
 
@@ -126,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         FirebaseUser fbUser = mAuth.getCurrentUser();
 
-        if(fbUser != null) {
+        if (fbUser != null) {
             fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
         } else {
             Log.d("Firebase", "Problem beim automatischen einloggen!");
@@ -143,11 +151,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         FirebaseUser fbUser = mAuth.getCurrentUser();
-        if(fbUser != null) {
+        if (fbUser != null) {
             fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
+            usernameTextView.setText(fbUser.getDisplayName());
+            Log.i("NavigationDrawer", "Ausgelesener Name " + fbUser.getDisplayName());
+            Log.i("NavigationDrawer", "Ausgelesene Punkte " + userDB.getFitpoints(fbUser.getDisplayName()));
+
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                Log.i("NavigationDrawer", "Ausgelesene Punkte " + userDB.getFitpoints(fbUser.getDisplayName()));
+
+            }, 1250);
+
         } else {
             Log.d("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
             fitpointsTextView.setVisibility(View.INVISIBLE);
         }
     }
+
 }
