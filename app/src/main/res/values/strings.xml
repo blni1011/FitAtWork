@@ -18,4 +18,6 @@
     <string name="steps">[Schritte]</string>
     <string name="fitpoints">[Fitpoints]</string>
     <string name="break_time">[Pausenzeit]</string>
+    <string name="header_greetingLoggedIn">Hallo, </string>
+    <string name="header_greetingLoggedOut">Hallo, bitte einloggen!</string>
 </resources>

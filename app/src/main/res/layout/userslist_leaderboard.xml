@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
+    android:layout_margin="16dp"
     app:cardCornerRadius="8dp"
-    android:layout_margin="16dp">
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,32 +18,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="1"
-               android:textSize="26sp"
-               android:id="@+id/cardview_rank"
-               android:layout_centerVertical="true"
-               android:textStyle="bold"
-               android:textColor="@color/main_color_primary"/>
+
+            <TextView
+                android:id="@+id/cardview_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="1"
+                android:textColor="@color/main_color_primary"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/cardview_profilepic"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toEndOf="@id/cardview_rank"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                app:srcCompat="@drawable/logo_info_app" />
+
             <TextView
                 android:id="@+id/cardview_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toEndOf="@id/cardview_profilepic"
                 android:text="Username "
-                android:textSize="26sp"
-                android:layout_toEndOf="@id/cardview_rank"
-                android:layout_marginLeft="16dp"/>
+                android:textSize="26sp" />
+
             <TextView
                 android:id="@+id/carview_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="punkte"
-                android:textSize="20sp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:text="punkte"
+                android:textSize="20sp" />
         </RelativeLayout>
     </LinearLayout>
 
