@@ -11,13 +11,16 @@
         android:theme="@style/Theme.FitWork">
         <activity
             android:name=".ExercisePlayerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ExerciseSportActivity"/>
         <activity
             android:name=".ExerciseBrainTrainingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ExerciseActivity"/>
         <activity
             android:name=".ExerciseSportActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ExerciseActivity"/>
         <activity
             android:name=".RegisterActivity"
             android:exported="false"

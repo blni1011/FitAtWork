@@ -19,13 +19,28 @@
         android:layout_marginStart="8dp"
         android:text="Titel"
         android:textSize="26sp"/>
-    <VideoView
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/exerciseSport_title"
+        android:id="@+id/exerciseSport_frameLayout"
+        android:layout_below="@id/exerciseSport_title">
+
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_marginTop="4dp"
-        android:id="@+id/exerciseSport_videoView"
-        />
+        android:id="@+id/exerciseSport_videoView" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exerciseSport_description"
+        android:layout_below="@id/exerciseSport_frameLayout"
+        android:layout_marginTop="8dp"
+        android:text="Beschreibung"
+        android:layout_marginStart="8dp"/>
 
 
 </RelativeLayout>
