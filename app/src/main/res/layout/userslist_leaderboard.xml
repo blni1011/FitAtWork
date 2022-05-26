@@ -39,8 +39,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_toEndOf="@id/cardview_rank"
                 android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-                app:srcCompat="@drawable/logo_info_app" />
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
             <TextView
                 android:id="@+id/cardview_username"

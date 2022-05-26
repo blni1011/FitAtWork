@@ -38,9 +38,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.username.setText(user.getUsername());
         holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
         holder.rank.setText(String.valueOf(position+1));
-        if (userDB.getProfilePicture(user.getUsername()) != null){
-            holder.profilepic.setImageBitmap(userDB.getProfilePicture(user.getUsername()));
-        }
+        userDB.getProfilePicture(user.getUsername(), holder.profilepic);
     }
 
     @Override

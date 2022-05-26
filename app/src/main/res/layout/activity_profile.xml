@@ -40,8 +40,7 @@
                         android:layout_width="110dp"
                         android:layout_height="110dp"
                         android:scaleType="centerCrop"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-                        app:srcCompat="@drawable/logo_info_app" />
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/profile_changePicture"
@@ -85,7 +84,8 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_login_profile_focused" />
+                    android:src="@drawable/ic_login_profile_focused"
+                    android:layout_gravity="center_vertical"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
 
                 //Name
 
-                <TextView
+                <EditText
                     android:id="@+id/profile_vorname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                     android:textColor="@color/darker_grey"
                     android:textSize="18sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/profile_nachname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

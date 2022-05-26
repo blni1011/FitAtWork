@@ -11,9 +11,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,9 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,8 +44,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     private TextView usernameField;
-    private TextView nameField;
-    private TextView lastNameField;
+    private EditText nameField;
+    private EditText lastNameField;
     private ShapeableImageView changePicture;
     private ShapeableImageView profilePicture;
 
@@ -69,6 +74,10 @@ public class ProfileActivity extends AppCompatActivity {
         changePicture = findViewById(R.id.profile_changePicture);
         profilePicture = findViewById(R.id.profile_picture);
 
+        //Sperren der EditTexts
+        nameField.setEnabled(false);
+        lastNameField.setEnabled(false);
+
         //Ändern des Profilbilds
         changePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,21 +86,8 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(openGallery, 1000);
             }
         });
-
         //Laden des Profilbilds
-        try {
-            final File localFile = File.createTempFile("profile", "jpg");
-            storageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            profilePicture.setImageBitmap(bitmap);
-                        }
-                    });
-        } catch (IOException e) {
-            Log.i("Profil", "Fehler beim Laden des Profilbilds");
-        }
+        userDBHelper.getProfilePicture(user.getDisplayName(), profilePicture);
     }
 
     @Override
@@ -108,11 +104,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         usernameField.setText(user.getDisplayName());
-        nameField.setText(userDBHelper.getName(user.getDisplayName()));
-        lastNameField.setText(userDBHelper.getLastName(user.getDisplayName()));
+        /*
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            nameField.setText(userDBHelper.getName(user.getDisplayName()));
+            lastNameField.setText(userDBHelper.getLastName(user.getDisplayName()));
+        }, 5000);*/
     }
 
     private void uploadProfilePicture(Uri imageuri) {

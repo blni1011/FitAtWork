@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         FirebaseUser fbUser = mAuth.getCurrentUser();
         if (fbUser != null) {
-            fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
             headerGreetingsTextView.setText(R.string.header_greetingLoggedIn);
             usernameTextView.setText(fbUser.getDisplayName());
             Log.i("NavigationDrawer", "Ausgelesener Name " + fbUser.getDisplayName());
@@ -159,16 +158,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 Log.i("NavigationDrawer", "Ausgelesene Punkte " + userDB.getFitpoints(fbUser.getDisplayName()));
-
-            }, 1250);
+                fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
+            }, 1000);
 
         } else {
             Log.d("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
             fitpointsTextView.setVisibility(View.INVISIBLE);
             usernameTextView.setVisibility(View.INVISIBLE);
             headerGreetingsTextView.setText(R.string.header_greetingLoggedOut);
-
         }
     }
-
 }
