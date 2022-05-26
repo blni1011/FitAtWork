@@ -20,4 +20,6 @@
     <string name="break_time">[Pausenzeit]</string>
     <string name="header_greetingLoggedIn">Hallo, </string>
     <string name="header_greetingLoggedOut">Hallo, bitte einloggen!</string>
+    <string name="profile_saveChanges">Änderungen speichern</string>
+    <string name="profile_editProfile">Profil bearbeiten</string>
 </resources>

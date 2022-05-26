@@ -23,8 +23,11 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        getData();
 
     }
 
@@ -155,17 +160,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.i("NavigationDrawer", "Ausgelesener Name " + fbUser.getDisplayName());
             Log.i("NavigationDrawer", "Ausgelesene Punkte " + userDB.getFitpoints(fbUser.getDisplayName()));
 
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                Log.i("NavigationDrawer", "Ausgelesene Punkte " + userDB.getFitpoints(fbUser.getDisplayName()));
-                fitpointsTextView.setText(String.valueOf(userDB.getFitpoints(fbUser.getDisplayName())));
-            }, 1000);
-
         } else {
             Log.d("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
             fitpointsTextView.setVisibility(View.INVISIBLE);
             usernameTextView.setVisibility(View.INVISIBLE);
             headerGreetingsTextView.setText(R.string.header_greetingLoggedOut);
+        }
+    }
+
+    private void getData() {
+        DatabaseReference database = userDB.getDatabase();
+        FirebaseUser fbUser = mAuth.getCurrentUser();
+
+        //Fitpoints
+        if(fbUser != null) {
+            database.child(fbUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()) {
+                        User user = snapshot.getValue(User.class);
+                        fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 }

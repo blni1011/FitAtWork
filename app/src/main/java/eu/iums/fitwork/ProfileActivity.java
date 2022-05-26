@@ -7,43 +7,39 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     private UserDBHelper userDBHelper;
-    private FirebaseUser user;
+    private FirebaseUser fbUser;
 
     private TextView usernameField;
+    private TextView editProfile;
     private EditText nameField;
     private EditText lastNameField;
     private ShapeableImageView changePicture;
@@ -51,10 +47,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     private StorageReference storageReference;
 
+    private boolean isEditable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        isEditable = false;
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -64,8 +64,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Firebase
         userDBHelper = new UserDBHelper();
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        storageReference = FirebaseStorage.getInstance().getReference().child("users/" + user.getDisplayName() + "/profile.jpg");
+        fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        storageReference = FirebaseStorage.getInstance().getReference().child("users/" + fbUser.getDisplayName() + "/profile.jpg");
 
 
         usernameField = findViewById(R.id.profile_username);
@@ -73,10 +73,11 @@ public class ProfileActivity extends AppCompatActivity {
         lastNameField = findViewById(R.id.profile_nachname);
         changePicture = findViewById(R.id.profile_changePicture);
         profilePicture = findViewById(R.id.profile_picture);
+        editProfile = findViewById(R.id.profile_editProfileButton);
 
         //Sperren der EditTexts
-        nameField.setEnabled(false);
-        lastNameField.setEnabled(false);
+        nameField.setEnabled(isEditable);
+        lastNameField.setEnabled(isEditable);
 
         //Ändern des Profilbilds
         changePicture.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +88,29 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         //Laden des Profilbilds
-        userDBHelper.getProfilePicture(user.getDisplayName(), profilePicture);
+        userDBHelper.getProfilePicture(fbUser.getDisplayName(), profilePicture);
+
+        //Laden der Daten
+        getData();
+
+        //EditProfile ClickListener
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isEditable) {
+                    isEditable = false;
+                    editProfile.setText(R.string.profile_editProfile);
+                    updateUser(usernameField.getText().toString(), nameField.getText().toString(), lastNameField.getText().toString());
+                    nameField.setEnabled(isEditable);
+                    lastNameField.setEnabled(isEditable);
+                } else {
+                    isEditable = true;
+                    editProfile.setText(R.string.profile_saveChanges);
+                    nameField.setEnabled(isEditable);
+                    lastNameField.setEnabled(isEditable);
+                }
+            }
+        });
     }
 
     @Override
@@ -106,13 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        usernameField.setText(user.getDisplayName());
-        /*
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            nameField.setText(userDBHelper.getName(user.getDisplayName()));
-            lastNameField.setText(userDBHelper.getLastName(user.getDisplayName()));
-        }, 5000);*/
+        usernameField.setText(fbUser.getDisplayName());
     }
 
     private void uploadProfilePicture(Uri imageuri) {
@@ -120,6 +137,50 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.i("Profil", "Profilbild erfolgreich auf Firebase geladen!");
+            }
+        });
+    }
+
+    private void getData() {
+        DatabaseReference database = userDBHelper.getDatabase();
+
+        //Fitpoints
+        if (fbUser != null) {
+            database.child(fbUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        User user = snapshot.getValue(User.class);
+                        nameField.setText(user.getName());
+                        lastNameField.setText(user.getLastName());
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+
+    private void updateUser(String username, String name, String lastName) {
+        DatabaseReference database = userDBHelper.getDatabase();
+
+        Map<String, Object> updateChildren = new HashMap<>();
+        updateChildren.put("/" + username + "/" + userDBHelper.db_name, name);
+        updateChildren.put("/" + username + "/" + userDBHelper.db_lastname, lastName);
+
+        database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(ProfileActivity.this, "Änderung des Profils erfolgreich!", Toast.LENGTH_SHORT).show();
+                Log.i("Database", "Profil erfolgreich geändert!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfileActivity.this, "Fehler beim Ändern des Profils!", Toast.LENGTH_SHORT).show();
+                Log.i("Database", "Fehler beim ändern des Profils!");
             }
         });
     }
