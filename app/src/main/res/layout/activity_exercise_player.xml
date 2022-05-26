@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,5 +10,22 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar2" />
 
+    <TextView
+        android:id="@+id/exerciseSport_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:text="Titel"
+        android:textSize="26sp"/>
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exerciseSport_title"
+        android:layout_marginTop="4dp"
+        android:id="@+id/exerciseSport_videoView"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

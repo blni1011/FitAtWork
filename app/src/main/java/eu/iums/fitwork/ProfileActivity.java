@@ -97,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isEditable) {
+                if (isEditable) {
                     isEditable = false;
                     editProfile.setText(R.string.profile_editProfile);
                     updateUser(usernameField.getText().toString(), nameField.getText().toString(), lastNameField.getText().toString());
@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getData() {
         DatabaseReference database = userDBHelper.getDatabase();
 
-        //Fitpoints
+        //Userdaten aus Firebase auslesen
         if (fbUser != null) {
             database.child(fbUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -153,16 +153,19 @@ public class ProfileActivity extends AppCompatActivity {
                         User user = snapshot.getValue(User.class);
                         nameField.setText(user.getName());
                         lastNameField.setText(user.getLastName());
+                        Log.i("ProfileActivity/getData", "Laden der Nutzerdaten aus Firebase erfolgreich!");
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    Log.i("ProfileActivity/getData", "Fehler beim Laden der Nutzerdaten aus Firebase!");
                 }
             });
         }
     }
 
+    //Update der User Daten in der Firebase Realtime DB
     private void updateUser(String username, String name, String lastName) {
         DatabaseReference database = userDBHelper.getDatabase();
 
@@ -174,13 +177,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(ProfileActivity.this, "Änderung des Profils erfolgreich!", Toast.LENGTH_SHORT).show();
-                Log.i("Database", "Profil erfolgreich geändert!");
+                Log.i("ProfileActivity/updateUser", "Profil erfolgreich geändert!");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(ProfileActivity.this, "Fehler beim Ändern des Profils!", Toast.LENGTH_SHORT).show();
-                Log.i("Database", "Fehler beim ändern des Profils!");
+                Log.i("ProfileActivity/updateUser", "Fehler beim ändern des Profils!");
             }
         });
     }
