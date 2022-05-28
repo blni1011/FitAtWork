@@ -17,9 +17,11 @@ public class AlertReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i , 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "break_alert")
-                .setSmallIcon(R.drawable.ic_missing_icon)
+                .setSmallIcon(R.drawable.streching_sport_and_notification_icon)
                 .setContentTitle("Fit@Work")
-                .setContentText("Ihre Mittagspause beginnt jetzt.")
+                .setContentText("Ihre Mittagspause beginnt jetzt")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                       .bigText("Ihre Mittagspause beginnt jetzt"))
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

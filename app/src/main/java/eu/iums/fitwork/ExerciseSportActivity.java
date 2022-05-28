@@ -42,7 +42,7 @@ public class ExerciseSportActivity extends AppCompatActivity {
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Übung");
+        getSupportActionBar().setTitle("Übungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //RecyclerView
