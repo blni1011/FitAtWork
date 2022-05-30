@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/empty1"
@@ -34,11 +34,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/settings_titel_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="Benachrichtigungen"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
@@ -46,44 +46,44 @@
                 android:textStyle="bold" />
 
             <Switch
-                android:layout_marginStart="15dp"
                 android:id="@+id/switch_alert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:minHeight="48dp"
                 android:text="Pausenalarm"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/selected_time"
-                android:layout_weight="0"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="0"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="20sp"
                 android:minHeight="48dp"
                 android:text="@string/break_time"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/select_time"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
                 android:minHeight="48dp"
                 android:text="Uhrzeit auswählen"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Switch
-                android:layout_marginStart="15dp"
                 android:id="@+id/switch_drink_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:minHeight="48dp"
                 android:text="Erinnerungen Trinkpause"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -113,11 +113,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/settings_titel_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="Leaderboard"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
@@ -125,10 +125,10 @@
                 android:textStyle="bold" />
 
             <Switch
-                android:layout_marginStart="15dp"
                 android:id="@+id/switch_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:minHeight="48dp"
                 android:text="Teilnahme"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -158,11 +158,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/settings_titel_impressum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginEnd="15dp"
                 android:text="Impressum"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
@@ -170,11 +170,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/impressum_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="\nAngaben gemäß § 5 TMG\n
                 \nVSM Info Projekt
                 \nHoffstraße 3
@@ -210,36 +210,96 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/settings_titel_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="Feedback"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:id="@+id/feedback_input"
+            <TextView
+                android:id="@+id/feedback_text1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:minHeight="48dp"
-                android:hint="Ihre Verbesserung..."
-                android:textSize="16sp" />
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:text="An:" />
 
-            <TextView
+            <EditText
+                android:id="@+id/edit_text_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="scni1081@h-ka.de"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/feedback_text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginEnd="15dp"
+                android:text="Betreff:" />
+
+            <EditText
+                android:id="@+id/edit_text_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Verbesserung FitatWork"
+                android:inputType="textEmailSubject"
+                android:minHeight="48dp"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/feedback_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginEnd="15dp"
+                android:text="Nachricht:" />
+
+            <EditText
+                android:id="@+id/edit_text_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Ihre Verbesserung hier eingeben"
+                android:lines="5"
+                android:minHeight="48dp"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/button_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:text="Senden" />
+
+            <TextView
+                android:id="@+id/feedback_text_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
                 android:text="Mithilfe Ihres Feedbacks ist es uns möglich, die App für Sie \nimmer weiter zu verbessern. Vielen Dank" />
 
             <TextView
@@ -267,11 +327,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/settings_titel_information"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="Mehr Informationen"
                 android:textAlignment="textStart"
                 android:textColor="@color/main_color_primary"
@@ -279,19 +339,19 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/information_titel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="\nAuftraggeber:" />
 
             <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:id="@+id/information_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:autoLink="all"
                 android:minHeight="48dp"
                 android:text="https://www.h-ka.de/iums/profil?mdrv=www.h-ka.de&amp;cHash=6c366e53e1ac74781909582478c4e546" />

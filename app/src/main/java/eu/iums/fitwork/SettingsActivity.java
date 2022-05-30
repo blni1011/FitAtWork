@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,6 +39,9 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     private Switch leaderboard;
+    private EditText mEditTextTo;
+    private EditText mEditTextSubject;
+    private EditText mEditTextMessage;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SELECTED_TIME = "time";
@@ -81,6 +85,18 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         loadData();
         updateViews();
 
+        //Feedback
+        mEditTextTo = findViewById(R.id.edit_text_to);
+        mEditTextSubject = findViewById(R.id.edit_text_subject);
+        mEditTextMessage = findViewById(R.id.edit_text_message);
+
+        Button buttonSend = findViewById(R.id.button_send);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMail();
+            }
+        });
     }
 
     private void createNotificationChannel() {
@@ -144,5 +160,21 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     public void updateViews() {
         selected_time.setText(time);
         switch_alert.setChecked(alarm_state);
+    }
+
+    private void sendMail() {
+        String recipientList = mEditTextTo.getText().toString();
+        String[] recipients = recipientList.split(",");
+
+        String subject = mEditTextSubject.getText().toString();
+        String message = mEditTextMessage.getText().toString();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, "Wähle eine Email Anwendung"));
     }
 }
