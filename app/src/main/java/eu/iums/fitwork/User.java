@@ -46,9 +46,7 @@ public class User {
         this.fitPoints = 0;
     }
 
-    public User() {
-
-    }
+    public User() {}
     public User(String username) {
         database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");
         fbUser = FirebaseAuth.getInstance().getCurrentUser();

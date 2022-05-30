@@ -52,60 +52,11 @@ public class UserDBHelper {
 
     }
 
-    //User
     public void writeNewUser(String username, String name, String lastname, String email) {
         user = new User(username, name, lastname, email);
 
         mDatabase.child(username).setValue(user);
     }
-
-    public void deleteUser(String email) {
-        mDatabase.child("users").child(email).removeValue();
-    }
-
-    public void writeTest() {
-        mDatabase.child("TestChild").setValue("TestValue");
-    }
-
-    public boolean checkUserExists(String username) {
-
-        return false;
-    }
-
-    public String getName(String username) {
-        mDatabase.child(username).child(db_name).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    name = snapshot.getValue(String.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
-            }
-        });
-        return name;
-    }
-
-    public String getLastName(String username) {
-        mDatabase.child(username).child(db_lastname).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    lastName = snapshot.getValue(String.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Datenbank", "Abfrage des Namen aus der Datenbank fehlerhaft!");
-            }
-        });
-        return lastName;
-    }
-
     public Integer getFitpoints(String username) {
         mDatabase.child(username).child(db_fitpoints).addValueEventListener(new ValueEventListener() {
             @Override

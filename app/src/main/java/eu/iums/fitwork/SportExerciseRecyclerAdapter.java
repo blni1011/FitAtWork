@@ -39,7 +39,7 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
 
         holder.titleView.setText(exercise.getTitle());
         holder.fitpointsView.setText(String.valueOf(exercise.getFitpoints()));
-        holder.descriptionView.setText(exercise.getDescription());
+        //holder.descriptionView.setText(exercise.getDescription());
         holder.categoryView.setText(exercise.getCategory());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +74,7 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
 
             titleView = itemView.findViewById(R.id.exerciseCardView_title);
             fitpointsView = itemView.findViewById(R.id.exerciseCardView_points);
-            descriptionView = itemView.findViewById(R.id.exerciseCardView_description);
+            //descriptionView = itemView.findViewById(R.id.exerciseCardView_description);
             categoryView = itemView.findViewById(R.id.exerciseCardView_category);
         }
     }

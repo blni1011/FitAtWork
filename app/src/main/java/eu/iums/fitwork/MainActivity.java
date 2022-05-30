@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Auslesen der Fitpoints und des Usernamen
         getData();
 
     }
@@ -129,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (user != null) {
                     mAuth.signOut();
                 }
-
                 break;
             case R.id.nav_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -157,9 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fbUser != null) {
             headerGreetingsTextView.setText(R.string.header_greetingLoggedIn);
             usernameTextView.setText(fbUser.getDisplayName());
-            Log.i("NavigationDrawer", "Ausgelesener Name " + fbUser.getDisplayName());
-            Log.i("NavigationDrawer", "Ausgelesene Punkte " + userDB.getFitpoints(fbUser.getDisplayName()));
-
         } else {
             Log.d("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
             fitpointsTextView.setVisibility(View.INVISIBLE);

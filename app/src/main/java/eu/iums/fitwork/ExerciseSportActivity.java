@@ -75,9 +75,4 @@ public class ExerciseSportActivity extends AppCompatActivity {
             }
         });
     }
-    private void startExercise() {
-        Intent intent = new Intent(this, ExercisePlayerActivity.class);
-        intent.putExtra("title", "eins");
-        startActivity(intent);
-    }
 }

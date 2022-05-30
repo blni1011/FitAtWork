@@ -27,11 +27,7 @@ public class ExercisePlayerActivity extends AppCompatActivity {
 
     private ExerciseDBHelper exHelper;
 
-
-    /*
-    *TODO:
-    * Anzeige der zu erreichenden Fitpoints einbauen
-    *
+    /*TODO: Anzeige der zu erreichenden Fitpoints, verbuchen der Fitpoints, Ladekreis, während Video bufferd?
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
