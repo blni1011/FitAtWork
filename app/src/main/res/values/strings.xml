@@ -10,6 +10,7 @@
     <string name="navdrawer_open">Navigation öffnen</string>
     <string name="navdrawer_close">Navigation schließen</string>
     <string name="name_user">[Name]</string>
+    <string name="email_user">[E-Mail]</string>
     <string name="lastname_user">[Nachname]</string>
     <string name="gender">[Geschlecht]</string>
     <string name="age">[Alter]</string>
@@ -18,6 +19,7 @@
     <string name="steps">[Schritte]</string>
     <string name="fitpoints">[Fitpoints]</string>
     <string name="break_time">[Pausenzeit]</string>
+    <string name="drink_time">[Trinkpausenzeit]</string>
     <string name="header_greetingLoggedIn">Hallo, </string>
     <string name="header_greetingLoggedOut">Hallo, bitte einloggen!</string>
     <string name="profile_saveChanges">Änderungen speichern</string>

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,6 +43,8 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView editProfile;
     private EditText nameField;
     private EditText lastNameField;
+    private EditText emailField;
+    private TextView fitpointsField;
     private ShapeableImageView changePicture;
     private ShapeableImageView profilePicture;
 
@@ -71,6 +74,9 @@ public class ProfileActivity extends AppCompatActivity {
         usernameField = findViewById(R.id.profile_username);
         nameField = findViewById(R.id.profile_vorname);
         lastNameField = findViewById(R.id.profile_nachname);
+        emailField = findViewById(R.id.profile_email);
+        fitpointsField = findViewById(R.id.profile_fitpoints);
+
         changePicture = findViewById(R.id.profile_changePicture);
         profilePicture = findViewById(R.id.profile_picture);
         editProfile = findViewById(R.id.profile_editProfileButton);
@@ -78,6 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Sperren der EditTexts
         nameField.setEnabled(isEditable);
         lastNameField.setEnabled(isEditable);
+        emailField.setEnabled(isEditable);
 
         //Ändern des Profilbilds
         changePicture.setOnClickListener(new View.OnClickListener() {
@@ -100,14 +107,21 @@ public class ProfileActivity extends AppCompatActivity {
                 if (isEditable) {
                     isEditable = false;
                     editProfile.setText(R.string.profile_editProfile);
-                    updateUser(usernameField.getText().toString(), nameField.getText().toString(), lastNameField.getText().toString());
+                    updateUser(usernameField.getText().toString(),
+                            nameField.getText().toString(),
+                            lastNameField.getText().toString(),
+                            emailField.getText().toString(),
+                            fitpointsField.getText().toString()
+                    );
                     nameField.setEnabled(isEditable);
                     lastNameField.setEnabled(isEditable);
+                    emailField.setEnabled(isEditable);
                 } else {
                     isEditable = true;
                     editProfile.setText(R.string.profile_saveChanges);
                     nameField.setEnabled(isEditable);
                     lastNameField.setEnabled(isEditable);
+                    emailField.setEnabled(isEditable);
                 }
             }
         });
@@ -153,6 +167,8 @@ public class ProfileActivity extends AppCompatActivity {
                         User user = snapshot.getValue(User.class);
                         nameField.setText(user.getName());
                         lastNameField.setText(user.getLastName());
+                        emailField.setText(user.getEmail());
+                        fitpointsField.setText(String.valueOf(user.getFitPoints()));
                         Log.i("ProfileActivity/getData", "Laden der Nutzerdaten aus Firebase erfolgreich!");
                     }
                 }
@@ -166,12 +182,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     //Update der User Daten in der Firebase Realtime DB
-    private void updateUser(String username, String name, String lastName) {
+    private void updateUser(String username, String name, String lastName, String email, String fitpoints) {
         DatabaseReference database = userDBHelper.getDatabase();
 
         Map<String, Object> updateChildren = new HashMap<>();
         updateChildren.put("/" + username + "/" + userDBHelper.DB_NAME, name);
         updateChildren.put("/" + username + "/" + userDBHelper.DB_LASTNAME, lastName);
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_EMAIL, email);
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_FITPOINTS, fitpoints);
 
         database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

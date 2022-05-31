@@ -57,8 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="punkte"
                 android:drawableRight="@drawable/ic_fitpoint"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/main_color_primary"
+                android:text="punkte"
                 android:textSize="20sp" />
         </RelativeLayout>
     </LinearLayout>

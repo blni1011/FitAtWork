@@ -73,6 +73,28 @@
         android:clickable="true" />
 
     <TextView
+        android:layout_marginBottom="16dp"
+        android:id="@+id/forgot_password"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/custom_button"
+        android:ems="10"
+        android:text="Passwort vergessen"
+        android:textColor="@drawable/button_pressed_color"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/register"
+        android:clickable="true"
+        app:drawableStartCompat="@drawable/ic_reset_password"
+        android:drawablePadding="12dp"
+        android:drawableTint="@drawable/button_pressed_color"/>
+
+    <TextView
         android:layout_marginBottom="40dp"
         android:id="@+id/register"
         android:gravity="center"
