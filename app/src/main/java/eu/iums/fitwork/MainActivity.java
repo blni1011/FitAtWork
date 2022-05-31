@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
@@ -41,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView usernameTextView;
     private TextView headerGreetingsTextView;
     private UserDBHelper userDB;
+    private ZitateDBHelper zitateDB;
+
+    private String zitat;
 
 
     @Override
@@ -62,8 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
-        //User-DB
+        //DBs
         userDB = new UserDBHelper();
+        zitateDB = new ZitateDBHelper();
 
         //Ausbleden von Items im Menü in Abhängigkeit von ein-/ausgeloggtem User
         if (mAuth.getCurrentUser() == null) {
@@ -86,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Auslesen der Fitpoints und des Usernamen
+        //Auslesen diverser Daten aus den Datenbanken
         getData();
 
     }
@@ -170,20 +179,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser fbUser = mAuth.getCurrentUser();
 
         //Fitpoints
-        if(fbUser != null) {
+        if (fbUser != null) {
             database.child(fbUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()) {
+                    if (snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
                         fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             });
         }
+
+        //Zitate
+        //TODO: Backup wenn keine Internetverbindung besteht, case überlegen.
+        ArrayList<String> zitateList = new ArrayList<>();
+        Random random = new Random();
+
+        zitateDB.getDatabase().get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String test = snapshot.getValue(String.class);
+                        zitateList.add(test);
+                    }
+                    Log.i("MainActivity/getData", "Auslesen der Zitate aus der Datenbank erfolgreich!");
+
+                    int iterator = random.nextInt(zitateList.size()) + 1;
+                    zitat = zitateList.get(iterator);
+                    Log.i("MainActivity/getData", "Zitat: " + zitat);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("MainActivity/getData", "Fehler beim Auslesen der Zitate aus der Datenbank!");
+            }
+        });
     }
 }

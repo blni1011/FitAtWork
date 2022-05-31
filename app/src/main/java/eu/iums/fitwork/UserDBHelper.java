@@ -33,15 +33,12 @@ public class UserDBHelper {
     private final DatabaseReference mDatabase;
     private StorageReference storageReference;
 
-    private String name;
-    private String lastName;
     private int fitpoints;
-    private Bitmap profilePicture;
 
-    public final String db_fitpoints = "fitPoints";
-    public final String db_name = "name";
-    public final String db_lastname = "lastName";
-    public final String db_email = "email";
+    public final String DB_FITPOINTS = "fitPoints";
+    public final String DB_NAME = "name";
+    public final String DB_LASTNAME = "lastName";
+    public final String DB_EMAIL = "email";
 
     private User user;
 
@@ -56,24 +53,6 @@ public class UserDBHelper {
         user = new User(username, name, lastname, email);
 
         mDatabase.child(username).setValue(user);
-    }
-    public Integer getFitpoints(String username) {
-        mDatabase.child(username).child(db_fitpoints).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    fitpoints = snapshot.getValue(Integer.class);
-                    Log.i("Datenbank", "Fitpoints geladen! Aktueller Stand " + fitpoints);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i("Datenbank", "Abfrage der Fitpoints aus der Datenbank fehlerhaft!");
-            }
-        });
-        return fitpoints;
     }
 
     public void getProfilePicture(String userName, ShapeableImageView imageView) {

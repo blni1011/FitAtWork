@@ -31,7 +31,6 @@ public class User {
     private String lastName;
     private String email;
     private int fitPoints;
-    private Bitmap profilePicture;
 
     private DatabaseReference database;
     private StorageReference storageReference;

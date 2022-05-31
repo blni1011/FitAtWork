@@ -170,8 +170,8 @@ public class ProfileActivity extends AppCompatActivity {
         DatabaseReference database = userDBHelper.getDatabase();
 
         Map<String, Object> updateChildren = new HashMap<>();
-        updateChildren.put("/" + username + "/" + userDBHelper.db_name, name);
-        updateChildren.put("/" + username + "/" + userDBHelper.db_lastname, lastName);
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_NAME, name);
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_LASTNAME, lastName);
 
         database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
