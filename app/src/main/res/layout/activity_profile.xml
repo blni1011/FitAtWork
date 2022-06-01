@@ -44,16 +44,16 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/profile_changePicture"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignRight="@id/profile_picture"
                         android:layout_alignBottom="@id/profile_picture"
                         android:background="#8c2c83"
                         android:scaleType="centerCrop"
+                        android:tint="@color/white"
                         app:contentPadding="6dp"
                         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-                        app:srcCompat="@drawable/ic_camera"
-                        android:tint="@color/white"/>
+                        app:srcCompat="@drawable/ic_camera" />
                 </RelativeLayout>
 
                 <TextView
@@ -94,11 +94,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="15dp"
                     android:text="Name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/name_icon"/>
@@ -113,6 +115,8 @@
                     android:text="@string/name_user"
                     android:textColor="@color/darker_grey"
                     android:textSize="18sp"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/profile_nachname"/>
@@ -124,6 +128,8 @@
                     android:text="@string/lastname_user"
                     android:textColor="@color/darker_grey"
                     android:textSize="18sp"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -361,11 +367,13 @@
                     android:id="@+id/email_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="15dp"
                     android:text="E-Mail-Adresse"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/profile_email"
                     app:layout_constraintStart_toEndOf="@id/email_icon"/>
@@ -376,9 +384,12 @@
                     android:id="@+id/profile_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:text="@string/email_user"
                     android:textColor="@color/darker_grey"
                     android:textSize="18sp"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toBottomOf="@id/email_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/email_icon"/>
@@ -415,11 +426,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="15dp"
                     android:text="FitPoints"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/fitpoint_icon"/>
@@ -434,6 +447,8 @@
                     android:text="@string/fitpoints"
                     android:textColor="@color/darker_grey"
                     android:textSize="18sp"
+                    android:minHeight="48dp"
+                    android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -459,6 +474,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+
                     android:src="@drawable/ic_missing_icon"
                     app:tint="@color/main_color_primary"
                     android:layout_gravity="center_vertical"/>
@@ -467,7 +483,7 @@
                     android:id="@+id/switch_ranking"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="15dp"
                     android:minHeight="48dp"
                     android:text="Leaderboardteilnahme"
                     android:textColor="@color/black"

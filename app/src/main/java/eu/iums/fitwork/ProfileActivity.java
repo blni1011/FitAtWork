@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -85,6 +88,8 @@ public class ProfileActivity extends AppCompatActivity {
         nameField.setEnabled(isEditable);
         lastNameField.setEnabled(isEditable);
         emailField.setEnabled(isEditable);
+        changePicture.setEnabled(isEditable);
+        changePicture.setVisibility(View.INVISIBLE);
 
         //Ändern des Profilbilds
         changePicture.setOnClickListener(new View.OnClickListener() {
@@ -110,18 +115,33 @@ public class ProfileActivity extends AppCompatActivity {
                     updateUser(usernameField.getText().toString(),
                             nameField.getText().toString(),
                             lastNameField.getText().toString(),
-                            emailField.getText().toString(),
-                            fitpointsField.getText().toString()
+                            emailField.getText().toString()
                     );
                     nameField.setEnabled(isEditable);
+                    nameField.setBackgroundColor(getResources().getColor(R.color.white));
+                    nameField.setTextColor(getResources().getColor(R.color.darker_grey));
                     lastNameField.setEnabled(isEditable);
+                    lastNameField.setBackgroundColor(getResources().getColor(R.color.white));
+                    lastNameField.setTextColor(getResources().getColor(R.color.darker_grey));
                     emailField.setEnabled(isEditable);
+                    emailField.setBackgroundColor(getResources().getColor(R.color.white));
+                    emailField.setTextColor(getResources().getColor(R.color.darker_grey));
+                    changePicture.setVisibility(View.INVISIBLE);
+                    changePicture.setEnabled(isEditable);
                 } else {
                     isEditable = true;
                     editProfile.setText(R.string.profile_saveChanges);
                     nameField.setEnabled(isEditable);
+                    nameField.setBackgroundColor(getResources().getColor(R.color.darker_grey));
+                    nameField.setTextColor(getResources().getColor(R.color.black));
                     lastNameField.setEnabled(isEditable);
+                    lastNameField.setBackgroundColor(getResources().getColor(R.color.darker_grey));
+                    lastNameField.setTextColor(getResources().getColor(R.color.black));
                     emailField.setEnabled(isEditable);
+                    emailField.setBackgroundColor(getResources().getColor(R.color.darker_grey));
+                    emailField.setTextColor(getResources().getColor(R.color.black));
+                    changePicture.setVisibility(View.VISIBLE);
+                    changePicture.setEnabled(isEditable);
                 }
             }
         });
@@ -182,14 +202,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     //Update der User Daten in der Firebase Realtime DB
-    private void updateUser(String username, String name, String lastName, String email, String fitpoints) {
+    private void updateUser(String username, String name, String lastName, String email) {
         DatabaseReference database = userDBHelper.getDatabase();
 
         Map<String, Object> updateChildren = new HashMap<>();
         updateChildren.put("/" + username + "/" + userDBHelper.DB_NAME, name);
         updateChildren.put("/" + username + "/" + userDBHelper.DB_LASTNAME, lastName);
         updateChildren.put("/" + username + "/" + userDBHelper.DB_EMAIL, email);
-        updateChildren.put("/" + username + "/" + userDBHelper.DB_FITPOINTS, fitpoints);
 
         database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
