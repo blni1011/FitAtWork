@@ -89,52 +89,32 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
-                android:id="@+id/empty2"
-                android:layout_width="match_parent"
+                android:id="@+id/selected_time_drink"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="textStart"
-                android:textColor="@color/main_color_primary"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/drink_time"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
 
-            <View
-                android:id="@+id/separator1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/main_color_secondary_dark" />
-
-            <TextView
-                android:id="@+id/empty3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textStart"
-                android:textColor="@color/main_color_primary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/settings_titel_leaderboard"
+            <Button
+                android:id="@+id/select_time_drink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:text="Leaderboard"
-                android:textAlignment="textStart"
-                android:textColor="@color/main_color_primary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Switch
-                android:id="@+id/switch_leaderboard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_weight="1"
                 android:minHeight="48dp"
-                android:text="Teilnahme"
+                android:text="Uhrzeit auswählen"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
-                android:id="@+id/empty4"
+                android:id="@+id/empty2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
