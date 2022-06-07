@@ -186,11 +186,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
                         fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
+                        Log.i("MainActivity/getData", "Ausgelesene FitPoints: " + user.getFitPoints());
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+                    Log.i("MainActivity/getData", "Fehler beim Auslesen der FitPoints aus der Datenbank!");
 
                 }
             });
@@ -205,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
+                    zitateList.clear();
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String test = snapshot.getValue(String.class);
                         zitateList.add(test);

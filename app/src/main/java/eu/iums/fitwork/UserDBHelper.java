@@ -39,6 +39,7 @@ public class UserDBHelper {
     public final String DB_NAME = "name";
     public final String DB_LASTNAME = "lastName";
     public final String DB_EMAIL = "email";
+    public final String DB_LEADERBOARD = "leaderboardActive";
 
     private User user;
 

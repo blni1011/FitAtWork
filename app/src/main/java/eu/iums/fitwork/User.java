@@ -31,6 +31,7 @@ public class User {
     private String lastName;
     private String email;
     private int fitPoints;
+    private boolean leaderboardActive;
 
     private DatabaseReference database;
     private StorageReference storageReference;
@@ -43,9 +44,12 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.fitPoints = 0;
+        this.leaderboardActive = false;
     }
 
-    public User() {}
+    public User() {
+    }
+
     public User(String username) {
         database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -58,11 +62,13 @@ public class User {
                 lastName = snapshot.child(username).child("lastName").getValue(String.class);
                 email = snapshot.child(username).child("email").getValue(String.class);
                 fitPoints = snapshot.child(username).child("fitPoints").getValue(Integer.class);
+                leaderboardActive = snapshot.child(username).child("leaderboardActive").getValue(Boolean.class);
+                Log.i("User/user", "Erstellen des User-Objekts aus der Datenbank erfolgreich");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i("User/user", "Fehler beim Erstellen des Userobjekts aus der Datenbank");
             }
         });
     }
@@ -85,5 +91,9 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public boolean isLeaderboardActive() {
+        return leaderboardActive;
     }
 }

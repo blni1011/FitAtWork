@@ -480,7 +480,7 @@
                     android:layout_gravity="center_vertical"/>
 
                 <Switch
-                    android:id="@+id/switch_ranking"
+                    android:id="@+id/profile_rankingSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"

@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView fitpointsField;
     private ShapeableImageView changePicture;
     private ShapeableImageView profilePicture;
+    private Switch rankingSwitch;
 
     private StorageReference storageReference;
 
@@ -83,6 +85,7 @@ public class ProfileActivity extends AppCompatActivity {
         changePicture = findViewById(R.id.profile_changePicture);
         profilePicture = findViewById(R.id.profile_picture);
         editProfile = findViewById(R.id.profile_editProfileButton);
+        rankingSwitch = findViewById(R.id.profile_rankingSwitch);
 
         //Sperren der EditTexts
         nameField.setEnabled(isEditable);
@@ -115,7 +118,8 @@ public class ProfileActivity extends AppCompatActivity {
                     updateUser(usernameField.getText().toString(),
                             nameField.getText().toString(),
                             lastNameField.getText().toString(),
-                            emailField.getText().toString()
+                            emailField.getText().toString(),
+                            rankingSwitch.isChecked()
                     );
                     nameField.setEnabled(isEditable);
                     nameField.setBackgroundColor(getResources().getColor(R.color.white));
@@ -189,6 +193,7 @@ public class ProfileActivity extends AppCompatActivity {
                         lastNameField.setText(user.getLastName());
                         emailField.setText(user.getEmail());
                         fitpointsField.setText(String.valueOf(user.getFitPoints()));
+                        rankingSwitch.setChecked(user.isLeaderboardActive());
                         Log.i("ProfileActivity/getData", "Laden der Nutzerdaten aus Firebase erfolgreich!");
                     }
                 }
@@ -202,13 +207,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     //Update der User Daten in der Firebase Realtime DB
-    private void updateUser(String username, String name, String lastName, String email) {
+    private void updateUser(String username, String name, String lastName, String email, boolean leaderboard) {
         DatabaseReference database = userDBHelper.getDatabase();
 
         Map<String, Object> updateChildren = new HashMap<>();
         updateChildren.put("/" + username + "/" + userDBHelper.DB_NAME, name);
         updateChildren.put("/" + username + "/" + userDBHelper.DB_LASTNAME, lastName);
         updateChildren.put("/" + username + "/" + userDBHelper.DB_EMAIL, email);
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_LEADERBOARD, leaderboard);
 
         database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

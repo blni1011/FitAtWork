@@ -57,7 +57,9 @@ public class LeaderboardActivity extends AppCompatActivity{
                 users.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User user = dataSnapshot.getValue(User.class);
-                    users.add(user);
+                    if(user.isLeaderboardActive()) {
+                        users.add(user);
+                    }
                     Collections.sort(users, new Comparator<User>() {
                         @Override
                         public int compare(User user1, User user2) {
