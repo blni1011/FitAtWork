@@ -69,15 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userDB = new UserDBHelper();
         zitateDB = new ZitateDBHelper();
 
-        //Ausbleden von Items im Menü in Abhängigkeit von ein-/ausgeloggtem User
-        if (mAuth.getCurrentUser() == null) {
-            Menu menu = navigationView.getMenu();
-            menu.findItem(R.id.nav_logout).setVisible(false);
-            menu.findItem(R.id.nav_profile).setVisible(false);
-        } else {
-            Menu menu = navigationView.getMenu();
-            menu.findItem(R.id.nav_login).setVisible(false);
-        }
+
 
         //Toolbar
         setSupportActionBar(toolbar);
@@ -90,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Auslesen diverser Daten aus den Datenbanken
-        getData();
     }
 
     //Wenn BackButton benutzt wird, schließt sich Drawer und nicht App
@@ -171,6 +161,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        //Auslesen diverser Daten aus den Datenbanken
+        getData();
+
         FirebaseUser fbUser = mAuth.getCurrentUser();
         if (fbUser != null) {
             headerGreetingsTextView.setText(R.string.header_greetingLoggedIn);
@@ -180,6 +173,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fitpointsTextView.setVisibility(View.INVISIBLE);
             usernameTextView.setVisibility(View.INVISIBLE);
             headerGreetingsTextView.setText(R.string.header_greetingLoggedOut);
+        }
+        //Ausblenden von Items im Nav-Drawer.
+        Menu menu = navigationView.getMenu();
+        if (mAuth.getCurrentUser() == null) {
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_profile).setVisible(false);
+            menu.findItem(R.id.nav_stats).setVisible(false);
+        } else {
+            menu.findItem(R.id.nav_login).setVisible(false);
         }
     }
 

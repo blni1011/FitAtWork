@@ -1,12 +1,16 @@
 package eu.iums.fitwork;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -48,6 +52,10 @@ public class LeaderboardActivity extends AppCompatActivity{
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
         toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
 
+        if(!dbUser.isLeaderboardActive()) {
+            showAlertDialog();
+        }
+
         //RecyclerView
         recyclerView = findViewById(R.id.leaderboard_list);
         recyclerView.setHasFixedSize(true);
@@ -84,5 +92,21 @@ public class LeaderboardActivity extends AppCompatActivity{
 
             }
         });
+    }
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_leaderboardInactive)
+                .setCancelable(true)
+                .setPositiveButton("Profileinstellungen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(LeaderboardActivity.this, ProfileActivity.class).putExtra("user", dbUser));
+                    }
+                }).setNegativeButton("Zurück", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(LeaderboardActivity.this, MainActivity.class));
+                    }
+                }).show();
     }
 }
