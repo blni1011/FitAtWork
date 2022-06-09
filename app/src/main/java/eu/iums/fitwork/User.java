@@ -1,13 +1,16 @@
 package eu.iums.fitwork;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +28,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User implements Parcelable {
 
@@ -39,6 +44,7 @@ public class User implements Parcelable {
     private StorageReference storageReference;
     private FirebaseUser fbUser;
 
+    private UserDBHelper userDBHelper;
 
     public User(String username, String name, String lastName, String email) {
         this.username = username;
@@ -118,6 +124,32 @@ public class User implements Parcelable {
 
     public boolean isLeaderboardActive() {
         return leaderboardActive;
+    }
+
+    public void addFitPoints(int pointsToAdd, Context context) {
+        userDBHelper = new UserDBHelper();
+        DatabaseReference database = userDBHelper.getDatabase();
+
+        fitPoints +=pointsToAdd;
+
+        Map<String, Object> updateChildren = new HashMap<>();
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_FITPOINTS, fitPoints);
+        database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.i("User/addFitpoints", "Fitpoints erfolgreich hinzugefügt! Neuer Stand: " + fitPoints);
+
+                Toast.makeText(context, R.string.success_addFitpoints, Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("User/addFitpoints", "Fehler beim hinzufügen der Fitpoints!");
+                Toast.makeText(context, R.string.failure_addFitpoints, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     @Override

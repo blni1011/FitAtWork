@@ -25,4 +25,6 @@
     <string name="profile_saveChanges">Änderungen speichern</string>
     <string name="profile_editProfile">Profil bearbeiten</string>
     <string name="connection_connectToWifi">Achtung! Du bist aktuell nicht mit dem WLAN verbunden. Möchtest Du trotzdem die Übung durchführen (eventuell hoher Datenverbrauch)?</string>
+    <string name="failure_addFitpoints">Fehler! Fitpoints konnten dem Konto nicht hinzugefügt werden!</string>
+    <string name="success_addFitpoints">Fitpoints wurden erfolgreich gutgeschrieben!</string>
 </resources>
