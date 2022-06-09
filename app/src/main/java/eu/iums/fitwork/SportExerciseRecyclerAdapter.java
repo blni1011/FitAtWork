@@ -78,4 +78,5 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
             categoryView = itemView.findViewById(R.id.exerciseCardView_category);
         }
     }
+
 }

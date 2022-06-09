@@ -24,4 +24,5 @@
     <string name="header_greetingLoggedOut">Hallo, bitte einloggen!</string>
     <string name="profile_saveChanges">Änderungen speichern</string>
     <string name="profile_editProfile">Profil bearbeiten</string>
+    <string name="connection_connectToWifi">Achtung! Du bist aktuell nicht mit dem WLAN verbunden. Möchtest Du trotzdem die Übung durchführen (eventuell hoher Datenverbrauch)?</string>
 </resources>
