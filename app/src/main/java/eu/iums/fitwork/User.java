@@ -2,6 +2,8 @@ package eu.iums.fitwork;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -24,7 +26,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class User {
+public class User implements Parcelable {
 
     private String username;
     private String name;
@@ -73,6 +75,27 @@ public class User {
         });
     }
 
+    protected User(Parcel in) {
+        username = in.readString();
+        name = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        fitPoints = in.readInt();
+        leaderboardActive = in.readByte() != 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public int getFitPoints() {
         return fitPoints;
     }
@@ -95,5 +118,20 @@ public class User {
 
     public boolean isLeaderboardActive() {
         return leaderboardActive;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(username);
+        parcel.writeString(name);
+        parcel.writeString(lastName);
+        parcel.writeString(email);
+        parcel.writeInt(fitPoints);
+        parcel.writeByte((byte) (leaderboardActive ? 1 : 0));
     }
 }

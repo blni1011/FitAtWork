@@ -6,19 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,10 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -47,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView headerGreetingsTextView;
     private UserDBHelper userDB;
     private ZitateDBHelper zitateDB;
+
+    private User dbUser;
 
     private String zitat;
 
@@ -97,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Auslesen diverser Daten aus den Datenbanken
         getData();
-
     }
 
     //Wenn BackButton benutzt wird, schließt sich Drawer und nicht App
@@ -116,18 +110,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_exercises:
                 Intent intent_exercises = new Intent(this, ExerciseActivity.class);
+                if(dbUser != null) {
+                    intent_exercises.putExtra("user", dbUser);
+                }
                 startActivity(intent_exercises);
                 break;
             case R.id.nav_history:
                 Intent intent_history = new Intent(this, HistoryActivity.class);
+                if(dbUser != null) {
+                    intent_history.putExtra("user", dbUser);
+                }
                 startActivity(intent_history);
                 break;
             case R.id.nav_stats:
                 Intent intent_stats = new Intent(this, LeaderboardActivity.class);
+                if(dbUser != null) {
+                    intent_stats.putExtra("user", dbUser);
+                }
                 startActivity(intent_stats);
                 break;
             case R.id.nav_profile:
                 Intent intent_profile = new Intent(this, ProfileActivity.class);
+                if(dbUser != null) {
+                    intent_profile.putExtra("user", dbUser);
+                }
                 startActivity(intent_profile);
                 break;
             case R.id.nav_login:
@@ -142,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
+                if(dbUser != null) {
+                    intent.putExtra("user", dbUser);
+                }
                 startActivity(intent);
                 break;
         }
@@ -225,5 +234,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("MainActivity/getData", "Fehler beim Auslesen der Zitate aus der Datenbank!");
             }
         });
+
+        //Erstellen User-Objekt
+        if(fbUser != null) {
+            dbUser = new User(fbUser.getDisplayName());
+        }
     }
 }

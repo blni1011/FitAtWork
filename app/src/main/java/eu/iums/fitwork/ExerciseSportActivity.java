@@ -6,10 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,17 +36,25 @@ public class ExerciseSportActivity extends AppCompatActivity {
     SportExerciseRecyclerAdapter adapter;
     RecyclerView recyclerView;
 
+    private TextView toolbarFitpointsField;
+
+    private int fitpoints;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_sport);
 
+        fitpoints = getIntent().getIntExtra("fitpoints", 0);
+
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Übungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(fitpoints));
 
         //RecyclerView
         recyclerView = findViewById(R.id.exerciseSports_list);

@@ -16,6 +16,8 @@ public class ExercisePlayerActivity extends AppCompatActivity {
     private VideoView videoView;
     private TextView titleView;
     private TextView descriptionView;
+    private TextView toolbarFitpointsField;
+
     private MediaController mediaController;
 
     private ExerciseDBHelper exHelper;

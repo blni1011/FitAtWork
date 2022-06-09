@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,16 +17,26 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
     Toolbar toolbar;
 
+
+    private TextView toolbarFitpointsField;
+
+    private User dbUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        dbUser = new User();
+        dbUser = getIntent().getParcelableExtra("user");
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Verlauf");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
 
         ListView history_list = (ListView) findViewById(R.id.listView);
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,16 +29,24 @@ public class LeaderboardActivity extends AppCompatActivity{
     UserDBHelper userDB;
     DatabaseReference database;
 
+    private TextView toolbarFitpointsField;
+    private User dbUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+
+        dbUser = new User();
+        dbUser = getIntent().getParcelableExtra("user");
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Leaderboard");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
 
         //RecyclerView
         recyclerView = findViewById(R.id.leaderboard_list);
