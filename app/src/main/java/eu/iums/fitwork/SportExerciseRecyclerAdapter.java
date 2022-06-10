@@ -39,8 +39,7 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
 
         holder.titleView.setText(exercise.getTitle());
         holder.fitpointsView.setText(String.valueOf(exercise.getFitpoints()));
-        //holder.descriptionView.setText(exercise.getDescription());
-        holder.categoryView.setText(exercise.getCategory());
+        holder.categoryView.setText(exercise.getCategory() + ", Bereich: " + exercise.getArea());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +50,7 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
                 intent.putExtra(exHelper.DB_EXERCISEDESCRIPTION, exercise.getDescription());
                 intent.putExtra(exHelper.DB_EXERCISEFITPOINTS, exercise.getFitpoints());
                 intent.putExtra(exHelper.DB_EXERCISEURL, exercise.getUrl());
+                intent.putExtra(exHelper.DB_EXERCISEAREA, exercise.getArea());
                 context.startActivity(intent);
             }
         });
@@ -66,7 +66,6 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
 
         TextView titleView;
         TextView fitpointsView;
-        TextView descriptionView;
         TextView categoryView;
 
         public RecyclerViewHolder(@NonNull View itemView) {
@@ -74,7 +73,6 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
 
             titleView = itemView.findViewById(R.id.exerciseCardView_title);
             fitpointsView = itemView.findViewById(R.id.exerciseCardView_points);
-            //descriptionView = itemView.findViewById(R.id.exerciseCardView_description);
             categoryView = itemView.findViewById(R.id.exerciseCardView_category);
         }
     }
