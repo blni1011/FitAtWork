@@ -49,7 +49,7 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
                 intent.putExtra(exHelper.DB_EXERCISETITLE, exercise.getTitle());
                 intent.putExtra(exHelper.DB_EXERCISECATEGORY, exercise.getCategory());
                 intent.putExtra(exHelper.DB_EXERCISEDESCRIPTION, exercise.getDescription());
-                intent.putExtra(exHelper.DB_EXERCISEFITPOINTS, String.valueOf(exercise.getFitpoints()));
+                intent.putExtra(exHelper.DB_EXERCISEFITPOINTS, exercise.getFitpoints());
                 intent.putExtra(exHelper.DB_EXERCISEURL, exercise.getUrl());
                 context.startActivity(intent);
             }

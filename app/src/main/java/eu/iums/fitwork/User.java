@@ -62,6 +62,7 @@ public class User implements Parcelable {
         database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference().child("users/" + fbUser.getUid() + "/profile.jpg");
+        this.username = username;
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
