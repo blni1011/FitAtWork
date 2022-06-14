@@ -62,7 +62,12 @@ public class LoginActivity extends AppCompatActivity {
         forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(android.util.Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                    mAuth.sendPasswordResetEmail(username.getText().toString());
+                    Toast.makeText(LoginActivity.this, "E-Mail zum Passwort zurücksetzen versendet!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Falsche E-Mail Adresse!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

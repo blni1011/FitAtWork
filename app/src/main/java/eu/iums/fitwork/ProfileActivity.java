@@ -163,10 +163,13 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //Passwortvergessen Button
-        //TODO: Passwort-Update activity einbauen?
         forgotPasswordField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(fbUser != null) {
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(fbUser.getEmail());
+                    Toast.makeText(ProfileActivity.this, "E-Mail zum zurücksetzen des Passworts erfolgreich!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
