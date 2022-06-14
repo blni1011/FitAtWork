@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView fitpointsTextView;
     private TextView usernameTextView;
     private TextView headerGreetingsTextView;
+    private TextView zitatTextView;
+
     private UserDBHelper userDB;
     private ZitateDBHelper zitateDB;
 
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         fitpointsTextView = findViewById(R.id.fitpoints);
         headerGreetingsTextView = findViewById(R.id.header_greetings);
+        zitatTextView = findViewById(R.id.textMainMenu);
 
         // init header text view
         View headerView = navigationView.getHeaderView(0);
@@ -157,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Auslesen diverser Daten aus den Datenbanken
         getData();
 
+
         FirebaseUser fbUser = mAuth.getCurrentUser();
         if (fbUser != null) {
             headerGreetingsTextView.setText(R.string.header_greetingLoggedIn);
@@ -221,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     int iterator = random.nextInt(zitateList.size()) + 1;
                     zitat = zitateList.get(iterator);
+                    zitatTextView.setText(zitat);
                     Log.i("MainActivity/getData", "Zitat: " + zitat);
                 }
             }
