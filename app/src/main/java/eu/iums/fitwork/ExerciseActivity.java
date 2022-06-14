@@ -18,7 +18,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    private User dbUser;
 
     private TextView toolbarFitpointsField;
 
@@ -27,8 +26,6 @@ public class ExerciseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
 
-        dbUser = new User();
-        dbUser = getIntent().getParcelableExtra("user");
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -36,7 +33,7 @@ public class ExerciseActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Übungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
-        toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
         //Button1 - Sport
         ShapeableImageView btnexercisesport = findViewById(R.id.button_exercise_sport);
@@ -60,12 +57,10 @@ public class ExerciseActivity extends AppCompatActivity {
     }
     public void openExerciseSportActivity() {
         Intent intent = new Intent(this, ExerciseSportActivity.class);
-        intent.putExtra("user", dbUser);
         startActivity(intent);
     }
     public void openExerciseBrainTrainingActivity() {
         Intent intent = new Intent(this, ExerciseBrainTrainingActivity.class);
-        intent.putExtra("user", dbUser);
         startActivity(intent);
     }
 }

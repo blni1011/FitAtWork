@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private String zitat;
 
+    private static int fitPoints;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,22 +102,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_exercises:
                 Intent intent_exercises = new Intent(this, ExerciseActivity.class);
-                if(dbUser != null) {
-                    intent_exercises.putExtra("user", dbUser);
-                }
                 startActivity(intent_exercises);
                 break;
             case R.id.nav_history:
                 Intent intent_history = new Intent(this, HistoryActivity.class);
-                if(dbUser != null) {
-                    intent_history.putExtra("user", dbUser);
-                }
                 startActivity(intent_history);
                 break;
             case R.id.nav_stats:
                 Intent intent_stats = new Intent(this, LeaderboardActivity.class);
                 if(dbUser != null) {
-                    intent_stats.putExtra("user", dbUser);
+                    intent_stats.putExtra("leaderboardActive", dbUser.isLeaderboardActive());
                 }
                 startActivity(intent_stats);
                 break;
@@ -138,9 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
-                if(dbUser != null) {
-                    intent.putExtra("user", dbUser);
-                }
                 startActivity(intent);
                 break;
         }
@@ -197,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
                         fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
+                        fitPoints = user.getFitPoints();
                         Log.i("MainActivity/getData", "Ausgelesene FitPoints: " + user.getFitPoints());
                     }
                 }
@@ -241,5 +235,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(fbUser != null) {
             dbUser = new User(fbUser.getDisplayName());
         }
+    }
+
+    public static int getFitPoints() {
+        return fitPoints;
     }
 }

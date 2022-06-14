@@ -1,5 +1,6 @@
 package eu.iums.fitwork;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,7 +18,13 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ExercisePlayerActivity extends AppCompatActivity {
@@ -35,6 +42,10 @@ public class ExercisePlayerActivity extends AppCompatActivity {
 
     private User user;
 
+    private UserDBHelper userDBHelper;
+
+    private String exName;
+
     private int fitpointsToAdd;
     private final String ALERT_WIFI = "wifi";
     private final String ALERT_FINISHEDVIDEO = "finish";
@@ -48,11 +59,15 @@ public class ExercisePlayerActivity extends AppCompatActivity {
 
         user = new User(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
+        userDBHelper = new UserDBHelper();
+
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Übung");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
         videoView = findViewById(R.id.exerciseSport_videoView);
         titleView = findViewById(R.id.exerciseSport_title);
@@ -86,6 +101,8 @@ public class ExercisePlayerActivity extends AppCompatActivity {
         titleView.setText(getIntent().getExtras().getString(exHelper.DB_EXERCISETITLE));
         descriptionView.setText(getIntent().getExtras().getString(exHelper.DB_EXERCISEDESCRIPTION));
         fitpointsToAdd = getIntent().getExtras().getInt(exHelper.DB_EXERCISEFITPOINTS);
+
+        exName = getIntent().getExtras().getString(exHelper.DB_EXERCISETITLE);
     }
 
     private boolean isConnected(ExercisePlayerActivity activity) {
@@ -137,9 +154,31 @@ public class ExercisePlayerActivity extends AppCompatActivity {
                             Intent intent = new Intent(ExercisePlayerActivity.this, ExerciseSportActivity.class);
                             intent.putExtra("user", user);
                             user.addFitPoints(fitpointsToAdd, getBaseContext());
+                            setExerciseInHistory();
                             startActivity(intent);
                         }
                     }).show();
         }
+    }
+
+    private void setExerciseInHistory() {
+        Map<String, String> exerciseToHistory = new HashMap<>();
+        DatabaseReference database = userDBHelper.getDatabase();
+
+        exerciseToHistory.put("/" + user.getUsername() + "/" + userDBHelper.DB_HISTORY + "/" + String.valueOf(System.currentTimeMillis()), exName);
+        database.child(user.getUsername())
+                .child(userDBHelper.DB_HISTORY)
+                .child(String.valueOf(System.currentTimeMillis()))
+                .setValue(exName).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.i("ExercisePlayerActivity/setExerciseInHistory", "Hinzufügen der Übung zur History erfolgreich");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("ExercisePlayerActivity/setExerciseInHistory", "Fehler beim hinzufügen der Übung zur History");
+            }
+        });
     }
 }

@@ -49,7 +49,6 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     public static final String SELECTED_TIME = "time";
     public static final String SWITCH_ALARM = "switch_alarm";
 
-    private User dbUser;
 
 
     //TODO: Entfernen des Leaderboard-Teilnahme-Switch
@@ -58,9 +57,6 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        dbUser = new User();
-        dbUser = getIntent().getParcelableExtra("user");
 
         selected_time = (TextView) findViewById(R.id.selected_time);
         createNotificationChannel();
@@ -73,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         getSupportActionBar().setTitle("Einstellungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
-        toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
 
         select_time = (Button) findViewById(R.id.select_time);

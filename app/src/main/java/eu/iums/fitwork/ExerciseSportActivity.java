@@ -38,7 +38,6 @@ public class ExerciseSportActivity extends AppCompatActivity {
 
     private TextView toolbarFitpointsField;
 
-    private int fitpoints;
 
 
     @Override
@@ -46,7 +45,6 @@ public class ExerciseSportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_sport);
 
-        fitpoints = getIntent().getIntExtra("fitpoints", 0);
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -54,7 +52,7 @@ public class ExerciseSportActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Übungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
-        toolbarFitpointsField.setText(String.valueOf(fitpoints));
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
         //RecyclerView
         recyclerView = findViewById(R.id.exerciseSports_list);

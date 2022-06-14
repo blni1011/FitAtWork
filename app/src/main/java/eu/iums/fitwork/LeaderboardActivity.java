@@ -30,19 +30,14 @@ public class LeaderboardActivity extends AppCompatActivity{
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
     ArrayList<User> users;
-    UserDBHelper userDB;
     DatabaseReference database;
 
     private TextView toolbarFitpointsField;
-    private User dbUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-
-        dbUser = new User();
-        dbUser = getIntent().getParcelableExtra("user");
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -50,9 +45,9 @@ public class LeaderboardActivity extends AppCompatActivity{
         getSupportActionBar().setTitle("Leaderboard");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
-        toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
-        if(!dbUser.isLeaderboardActive()) {
+        if(!getIntent().getBooleanExtra("leaderboardActive", false)) {
             showAlertDialog();
         }
 
@@ -100,7 +95,7 @@ public class LeaderboardActivity extends AppCompatActivity{
                 .setPositiveButton("Profileinstellungen", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(LeaderboardActivity.this, ProfileActivity.class).putExtra("user", dbUser));
+                        startActivity(new Intent(LeaderboardActivity.this, ProfileActivity.class));
                     }
                 }).setNegativeButton("Zurück", new DialogInterface.OnClickListener() {
                     @Override
