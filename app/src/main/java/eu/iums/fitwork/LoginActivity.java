@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView forgot_password;
     TextView register;
 
+    private TextView toolbarFitpointsField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setVisibility(View.INVISIBLE);
 
         //FirebaseAuthentication
         mAuth = FirebaseAuth.getInstance();

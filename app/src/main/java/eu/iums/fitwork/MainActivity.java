@@ -6,19 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,10 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -45,10 +38,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView fitpointsTextView;
     private TextView usernameTextView;
     private TextView headerGreetingsTextView;
+    private TextView zitatTextView;
+
     private UserDBHelper userDB;
     private ZitateDBHelper zitateDB;
 
+    private User dbUser;
+
     private String zitat;
+
+    private static int fitPoints;
 
 
     @Override
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         fitpointsTextView = findViewById(R.id.fitpoints);
         headerGreetingsTextView = findViewById(R.id.header_greetings);
+        zitatTextView = findViewById(R.id.textMainMenu);
 
         // init header text view
         View headerView = navigationView.getHeaderView(0);
@@ -74,15 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userDB = new UserDBHelper();
         zitateDB = new ZitateDBHelper();
 
-        //Ausbleden von Items im Menü in Abhängigkeit von ein-/ausgeloggtem User
-        if (mAuth.getCurrentUser() == null) {
-            Menu menu = navigationView.getMenu();
-            menu.findItem(R.id.nav_logout).setVisible(false);
-            menu.findItem(R.id.nav_profile).setVisible(false);
-        } else {
-            Menu menu = navigationView.getMenu();
-            menu.findItem(R.id.nav_login).setVisible(false);
-        }
+
 
         //Toolbar
         setSupportActionBar(toolbar);
@@ -94,9 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        //Auslesen diverser Daten aus den Datenbanken
-        getData();
 
     }
 
@@ -124,10 +113,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_stats:
                 Intent intent_stats = new Intent(this, LeaderboardActivity.class);
+                if(dbUser != null) {
+                    intent_stats.putExtra("leaderboardActive", dbUser.isLeaderboardActive());
+                }
                 startActivity(intent_stats);
                 break;
             case R.id.nav_profile:
                 Intent intent_profile = new Intent(this, ProfileActivity.class);
+                if(dbUser != null) {
+                    intent_profile.putExtra("user", dbUser);
+                }
                 startActivity(intent_profile);
                 break;
             case R.id.nav_login:
@@ -162,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        //Auslesen diverser Daten aus den Datenbanken
+        getData();
+
+
         FirebaseUser fbUser = mAuth.getCurrentUser();
         if (fbUser != null) {
             headerGreetingsTextView.setText(R.string.header_greetingLoggedIn);
@@ -171,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fitpointsTextView.setVisibility(View.INVISIBLE);
             usernameTextView.setVisibility(View.INVISIBLE);
             headerGreetingsTextView.setText(R.string.header_greetingLoggedOut);
+        }
+        //Ausblenden von Items im Nav-Drawer.
+        Menu menu = navigationView.getMenu();
+        if (mAuth.getCurrentUser() == null) {
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_profile).setVisible(false);
+            menu.findItem(R.id.nav_stats).setVisible(false);
+        } else {
+            menu.findItem(R.id.nav_login).setVisible(false);
         }
     }
 
@@ -186,11 +194,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
                         fitpointsTextView.setText(String.valueOf(user.getFitPoints()));
+                        fitPoints = user.getFitPoints();
+                        Log.i("MainActivity/getData", "Ausgelesene FitPoints: " + user.getFitPoints());
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+                    Log.i("MainActivity/getData", "Fehler beim Auslesen der FitPoints aus der Datenbank!");
 
                 }
             });
@@ -205,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
+                    zitateList.clear();
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String test = snapshot.getValue(String.class);
                         zitateList.add(test);
@@ -213,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     int iterator = random.nextInt(zitateList.size()) + 1;
                     zitat = zitateList.get(iterator);
+                    zitatTextView.setText(zitat);
                     Log.i("MainActivity/getData", "Zitat: " + zitat);
                 }
             }
@@ -222,5 +235,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("MainActivity/getData", "Fehler beim Auslesen der Zitate aus der Datenbank!");
             }
         });
+
+        //Erstellen User-Objekt
+        if(fbUser != null) {
+            dbUser = new User(fbUser.getDisplayName());
+        }
+    }
+
+    public static int getFitPoints() {
+        return fitPoints;
     }
 }

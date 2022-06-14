@@ -1,12 +1,17 @@
 package eu.iums.fitwork;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +30,9 @@ public class LeaderboardActivity extends AppCompatActivity{
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
     ArrayList<User> users;
-    UserDBHelper userDB;
     DatabaseReference database;
+
+    private TextView toolbarFitpointsField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,12 @@ public class LeaderboardActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Leaderboard");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
+
+        if(!getIntent().getBooleanExtra("leaderboardActive", false)) {
+            showAlertDialog();
+        }
 
         //RecyclerView
         recyclerView = findViewById(R.id.leaderboard_list);
@@ -57,7 +69,9 @@ public class LeaderboardActivity extends AppCompatActivity{
                 users.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User user = dataSnapshot.getValue(User.class);
-                    users.add(user);
+                    if(user.isLeaderboardActive()) {
+                        users.add(user);
+                    }
                     Collections.sort(users, new Comparator<User>() {
                         @Override
                         public int compare(User user1, User user2) {
@@ -73,5 +87,21 @@ public class LeaderboardActivity extends AppCompatActivity{
 
             }
         });
+    }
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_leaderboardInactive)
+                .setCancelable(true)
+                .setPositiveButton("Profileinstellungen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(LeaderboardActivity.this, ProfileActivity.class));
+                    }
+                }).setNegativeButton("Zurück", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(LeaderboardActivity.this, MainActivity.class));
+                    }
+                }).show();
     }
 }

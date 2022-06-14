@@ -334,7 +334,7 @@
                 android:layout_marginEnd="15dp"
                 android:autoLink="all"
                 android:minHeight="48dp"
-                android:text="https://www.h-ka.de/iums/profil?mdrv=www.h-ka.de&amp;cHash=6c366e53e1ac74781909582478c4e546" />
+                android:text="https://www.iums.eu" />
 
             <TextView
                 android:id="@+id/empty10"

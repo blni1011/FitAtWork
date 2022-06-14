@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -17,16 +18,22 @@ public class ExerciseActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
+
+    private TextView toolbarFitpointsField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
+
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Übungen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
         //Button1 - Sport
         ShapeableImageView btnexercisesport = findViewById(R.id.button_exercise_sport);
@@ -53,7 +60,7 @@ public class ExerciseActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void openExerciseBrainTrainingActivity() {
-        Intent intent2 = new Intent(this, ExerciseBrainTrainingActivity.class);
-        startActivity(intent2);
+        Intent intent = new Intent(this, ExerciseBrainTrainingActivity.class);
+        startActivity(intent);
     }
 }

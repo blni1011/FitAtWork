@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,18 +43,24 @@ public class ProfileActivity extends AppCompatActivity {
     private UserDBHelper userDBHelper;
     private FirebaseUser fbUser;
 
+    private TextView toolbarFitpointsField;
     private TextView usernameField;
+    private TextView fitpointsField;
     private TextView editProfile;
+    private TextView forgotPasswordField;
+
     private EditText nameField;
     private EditText lastNameField;
     private EditText emailField;
-    private TextView fitpointsField;
     private ShapeableImageView changePicture;
     private ShapeableImageView profilePicture;
+    private Switch rankingSwitch;
 
     private StorageReference storageReference;
 
     private boolean isEditable;
+
+    private User dbUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +69,17 @@ public class ProfileActivity extends AppCompatActivity {
 
         isEditable = false;
 
+        dbUser = new User();
+        dbUser = getIntent().getParcelableExtra("user");
+
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Profil");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
+        toolbarFitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
+
 
         //Firebase
         userDBHelper = new UserDBHelper();
@@ -79,10 +92,12 @@ public class ProfileActivity extends AppCompatActivity {
         lastNameField = findViewById(R.id.profile_nachname);
         emailField = findViewById(R.id.profile_email);
         fitpointsField = findViewById(R.id.profile_fitpoints);
+        forgotPasswordField = findViewById(R.id.profile_forgotPassword);
 
         changePicture = findViewById(R.id.profile_changePicture);
         profilePicture = findViewById(R.id.profile_picture);
         editProfile = findViewById(R.id.profile_editProfileButton);
+        rankingSwitch = findViewById(R.id.profile_rankingSwitch);
 
         //Sperren der EditTexts
         nameField.setEnabled(isEditable);
@@ -115,7 +130,8 @@ public class ProfileActivity extends AppCompatActivity {
                     updateUser(usernameField.getText().toString(),
                             nameField.getText().toString(),
                             lastNameField.getText().toString(),
-                            emailField.getText().toString()
+                            emailField.getText().toString(),
+                            rankingSwitch.isChecked()
                     );
                     nameField.setEnabled(isEditable);
                     nameField.setBackgroundColor(getResources().getColor(R.color.white));
@@ -145,8 +161,17 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Passwortvergessen Button
+        //TODO: Passwort-Update activity einbauen?
+        forgotPasswordField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
     }
 
+    //Laden des Profilbilds
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -176,39 +201,24 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        DatabaseReference database = userDBHelper.getDatabase();
-
-        //Userdaten aus Firebase auslesen
-        if (fbUser != null) {
-            database.child(fbUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        User user = snapshot.getValue(User.class);
-                        nameField.setText(user.getName());
-                        lastNameField.setText(user.getLastName());
-                        emailField.setText(user.getEmail());
-                        fitpointsField.setText(String.valueOf(user.getFitPoints()));
-                        Log.i("ProfileActivity/getData", "Laden der Nutzerdaten aus Firebase erfolgreich!");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.i("ProfileActivity/getData", "Fehler beim Laden der Nutzerdaten aus Firebase!");
-                }
-            });
-        }
+        nameField.setText(dbUser.getName());
+                        lastNameField.setText(dbUser.getLastName());
+                        emailField.setText(dbUser.getEmail());
+                        fitpointsField.setText(String.valueOf(dbUser.getFitPoints()));
+                        rankingSwitch.setChecked(dbUser.isLeaderboardActive());
     }
 
     //Update der User Daten in der Firebase Realtime DB
-    private void updateUser(String username, String name, String lastName, String email) {
+    private void updateUser(String username, String name, String lastName, String email, boolean leaderboard) {
         DatabaseReference database = userDBHelper.getDatabase();
+
+        //TODO: EMail auch in FBAuth ändern.
 
         Map<String, Object> updateChildren = new HashMap<>();
         updateChildren.put("/" + username + "/" + userDBHelper.DB_NAME, name);
         updateChildren.put("/" + username + "/" + userDBHelper.DB_LASTNAME, lastName);
-        updateChildren.put("/" + username + "/" + userDBHelper.DB_EMAIL, email);
+        //updateChildren.put("/" + username + "/" + userDBHelper.DB_EMAIL, email);
+        updateChildren.put("/" + username + "/" + userDBHelper.DB_LEADERBOARD, leaderboard);
 
         database.updateChildren(updateChildren).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

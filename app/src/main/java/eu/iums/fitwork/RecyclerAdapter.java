@@ -35,10 +35,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         User user = users.get(position);
-        holder.username.setText(user.getUsername());
-        holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
-        holder.rank.setText(String.valueOf(position+1));
-        userDB.getProfilePicture(user.getUsername(), holder.profilepic);
+        if(user.isLeaderboardActive()) {
+            holder.username.setText(user.getUsername());
+            holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
+            holder.rank.setText(String.valueOf(position + 1));
+            userDB.getProfilePicture(user.getUsername(), holder.profilepic);
+        }
     }
 
     @Override

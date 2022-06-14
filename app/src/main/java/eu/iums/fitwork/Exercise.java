@@ -7,17 +7,19 @@ public class Exercise {
     private String description;
     private String category;
     private String title;
+    private String area;
 
     public Exercise() {
 
     }
 
-    public Exercise(String title, String description, String category, Integer fitpoints, String url) {
+    public Exercise(String title, String description, String category, Integer fitpoints, String url, String area) {
         this.url = url;
         this.fitpoints = fitpoints;
         this.description = description;
         this.category = category;
         this.title = title;
+        this.area = area;
     }
 
     public String getTitle() {
@@ -38,6 +40,10 @@ public class Exercise {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getArea() {
+        return area;
     }
 
 }
