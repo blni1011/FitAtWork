@@ -24,18 +24,20 @@
 
             <TextView
                 android:id="@+id/exerciseCardView_title"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/exerciseCardView_points"
                 android:text="Titel"
                 android:textColor="@color/main_color_primary"
-                android:textSize="26sp"
+                android:textSize="23sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/exerciseCardView_category"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/exerciseCardView_title"
+                android:layout_toStartOf="@id/exerciseCardView_points"
                 android:text="Kategorie"
                 android:textSize="20sp"/>
 
@@ -45,11 +47,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:drawablePadding="5dp"
                 android:text="punkte"
-                android:drawableRight="@drawable/ic_fitpoint"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:drawableRightCompat="@drawable/ic_fitpoint"
+                app:drawableTint="@color/main_color_primary" />
 
-                />
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -48,10 +48,10 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView fitpointsField;
     private TextView editProfile;
     private TextView forgotPasswordField;
+    private TextView emailField;
 
     private EditText nameField;
     private EditText lastNameField;
-    private EditText emailField;
     private ShapeableImageView changePicture;
     private ShapeableImageView profilePicture;
     private Switch rankingSwitch;
@@ -139,9 +139,9 @@ public class ProfileActivity extends AppCompatActivity {
                     lastNameField.setEnabled(isEditable);
                     lastNameField.setBackgroundColor(getResources().getColor(R.color.white));
                     lastNameField.setTextColor(getResources().getColor(R.color.darker_grey));
-                    emailField.setEnabled(isEditable);
+                    /*emailField.setEnabled(isEditable);
                     emailField.setBackgroundColor(getResources().getColor(R.color.white));
-                    emailField.setTextColor(getResources().getColor(R.color.darker_grey));
+                    emailField.setTextColor(getResources().getColor(R.color.darker_grey));*/
                     changePicture.setVisibility(View.INVISIBLE);
                     changePicture.setEnabled(isEditable);
                 } else {
@@ -153,9 +153,9 @@ public class ProfileActivity extends AppCompatActivity {
                     lastNameField.setEnabled(isEditable);
                     lastNameField.setBackgroundColor(getResources().getColor(R.color.darker_grey));
                     lastNameField.setTextColor(getResources().getColor(R.color.black));
-                    emailField.setEnabled(isEditable);
+                    /*emailField.setEnabled(isEditable);
                     emailField.setBackgroundColor(getResources().getColor(R.color.darker_grey));
-                    emailField.setTextColor(getResources().getColor(R.color.black));
+                    emailField.setTextColor(getResources().getColor(R.color.black));*/
                     changePicture.setVisibility(View.VISIBLE);
                     changePicture.setEnabled(isEditable);
                 }

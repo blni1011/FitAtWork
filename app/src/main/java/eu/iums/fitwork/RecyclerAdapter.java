@@ -59,7 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             super(itemView);
 
             username = itemView.findViewById(R.id.cardview_username);
-            fitPoints = itemView.findViewById(R.id.carview_points);
+            fitPoints = itemView.findViewById(R.id.cardview_points);
             rank = itemView.findViewById(R.id.cardview_rank);
             profilepic = itemView.findViewById(R.id.cardview_profilepic);
         }

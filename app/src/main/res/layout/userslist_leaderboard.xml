@@ -36,7 +36,7 @@
                 android:id="@+id/cardview_profilepic"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_toEndOf="@id/cardview_rank"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
@@ -46,24 +46,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_toEndOf="@id/cardview_profilepic"
                 android:text="Username "
                 android:textSize="26sp" />
 
             <TextView
-                android:id="@+id/carview_points"
+                android:id="@+id/cardview_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:drawableRight="@drawable/ic_fitpoint"
                 android:drawablePadding="5dp"
-                android:drawableTint="@color/main_color_primary"
                 android:text="punkte"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:drawableRightCompat="@drawable/ic_fitpoint"
+                app:drawableTint="@color/main_color_primary" />
         </RelativeLayout>
     </LinearLayout>
-
-
 </androidx.cardview.widget.CardView>
