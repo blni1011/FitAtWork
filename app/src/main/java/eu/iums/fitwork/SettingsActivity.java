@@ -35,20 +35,13 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     private NotificationManagerCompat notificationManager;
     private Toolbar toolbar;
     private Button select_time;
-    private Button select_time_drink;
     private TextView selected_time;
-    private TextView selected_time_drink;
     private String time;
-    private String timeDrink;
     private Switch switch_break;
-    private Switch switch_drink;
     private boolean isVisible_break;
-    private boolean isVisible_drink;
     private boolean break_state;
-    private boolean drink_state;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-    private PendingIntent pendingIntentDrink;
     private EditText mEditTextTo;
     private EditText mEditTextSubject;
     private EditText mEditTextMessage;
@@ -57,9 +50,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SELECTED_TIME = "time";
-    public static final String SELECTED_TIME_DRINK = "time_drink";
     public static final String SWITCH_ALARM = "switch_alarm";
-    public static final String SWITCH_ALARM_DRINK = "switch_alarm_drink";
 
 
 
@@ -104,11 +95,11 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isVisible_break){
                     isVisible_break = true;
-
                     select_time.setVisibility(View.VISIBLE);
                     selected_time.setVisibility(View.VISIBLE);
                 } else {
                     isVisible_break = false;
+                    cancelAlarm();
                     select_time.setVisibility(View.INVISIBLE);
                     selected_time.setVisibility(View.INVISIBLE);
                 }
@@ -142,12 +133,8 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             NotificationChannel channel1 = new NotificationChannel("break_alert", name, importance);
             channel1.setDescription("This is the Break Alert Channel");
 
-            NotificationChannel channel2 = new NotificationChannel("drink_alert", name, importance);
-            channel2.setDescription("This is the Drink Alert Channel");
-
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel1);
-            notificationManager.createNotificationChannel(channel2);
         }
 
     }
@@ -155,6 +142,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     //Zeit einstellen
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        //Kalender
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(Calendar.MINUTE, minute);
@@ -168,12 +156,19 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             Toast.makeText(this, "Pausenalarm erfolgreich gesetzt", Toast.LENGTH_SHORT).show();
             updateTimeText(c);
         }
+    }
 
-        //Kalendar
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        cal.set(Calendar.MINUTE, minute);
-        cal.set(Calendar.SECOND, 0);
+    //Benachrichtigungen stoppen
+    private void cancelAlarm() {
+        Intent intent = new Intent(this, AlertReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        if(alarmManager == null) {
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+
+        alarmManager.cancel(pendingIntent);
+        Toast.makeText(this, "Pausenalarm ausgeschaltet", Toast.LENGTH_SHORT).show();
     }
 
     private void updateTimeText(Calendar c) {
@@ -181,14 +176,6 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         timeText = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
 
         selected_time.setText(timeText);
-        saveData();
-    }
-
-    private void updateTimeTextDrink(Calendar cal) {
-        String timeTextDrink;
-        timeTextDrink = DateFormat.getTimeInstance(DateFormat.SHORT).format(cal.getTime());
-
-        selected_time_drink.setText(timeTextDrink);
         saveData();
     }
 
@@ -205,9 +192,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         time = sharedPreferences.getString(SELECTED_TIME, "");
-        timeDrink = sharedPreferences.getString(SELECTED_TIME_DRINK, "");
         break_state = sharedPreferences.getBoolean(SWITCH_ALARM, false);
-        drink_state = sharedPreferences.getBoolean(SWITCH_ALARM_DRINK, false);
     }
 
 
