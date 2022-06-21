@@ -5,6 +5,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class ExerciseDBHelper {
+    /*
+    ExerciseDBHelper Klasse:
+    beinhaltet Informationen zur Datenbank der Übungen
+    */
 
     private final FirebaseDatabase firebaseDatabase;
     private final DatabaseReference database;

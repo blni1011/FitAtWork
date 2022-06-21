@@ -19,6 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity{
+    /**
+     * HistoryActivity:
+     * Anzeige der persönlichen Übungs-History des Users
+     * Anzeige als CardView mit Hilfe des Layouts aus der Übungsanzeige
+     */
 
     Toolbar toolbar;
     HistoryRecyclerAdapter adapter;
@@ -59,6 +64,7 @@ public class HistoryActivity extends AppCompatActivity{
         adapter = new HistoryRecyclerAdapter(this, exerciseNames, times);
         recyclerView.setAdapter(adapter);
 
+        //Auslesen der getätigten Übungen aus der Datenbank
         if(fbUser != null) {
             user = new User(fbUser.getDisplayName());
 

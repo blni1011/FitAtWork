@@ -28,5 +28,6 @@
     <string name="failure_addFitpoints">Fehler! Fitpoints konnten dem Konto nicht hinzugefügt werden!</string>
     <string name="success_addFitpoints">Fitpoints wurden erfolgreich gutgeschrieben!</string>
     <string name="alert_videoEnd">Das Übungsvideo ist zu Ende. Möchtest Du das Video nochmals ansehen oder zurück zur Übersicht? Deine Punkte werden dir erst gutgeschrieben, wenn du zurück zur Übersicht kehrst.</string>
+    <string name="success_logout">Erfolgreich ausgeloggt!</string>
     <string name="alert_leaderboardInactive">Du hast der Teilnahme am Leaderboard noch nicht zugestimmt. Wenn du eingeloggt bist, kannst du im Menüpunkt "Profil" der Teilnahme am Leaderboard zustimmen.</string>
 </resources>

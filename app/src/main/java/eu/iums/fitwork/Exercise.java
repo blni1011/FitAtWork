@@ -2,6 +2,11 @@ package eu.iums.fitwork;
 
 public class Exercise {
 
+    /*
+    Exercise Klasse:
+    Exercise-Objekt wie es in der DB gespeichert und wieder ausgelesen wird.
+     */
+
     private String url;
     private Integer fitpoints;
     private String description;

@@ -28,6 +28,11 @@ import java.util.Map;
 
 
 public class ExercisePlayerActivity extends AppCompatActivity {
+    /**
+    Abspielen der Übungen, diese werden als Intent übergeben
+     Wenn Video beendet wird ein Alert-Dialog angezeigt, in dem das Video erneut gestartet oder beendet wird.
+     Wenn keine WLAN-Verbindung besteht, wird ein AlertDialog angezeigt, in dem die Nachricht ignoriert oder in die Systemeinstellungen gewechselt werden kann.
+     */
 
     private Toolbar toolbar;
 
@@ -50,8 +55,7 @@ public class ExercisePlayerActivity extends AppCompatActivity {
     private final String ALERT_WIFI = "wifi";
     private final String ALERT_FINISHEDVIDEO = "finish";
 
-    /*TODO: Anzeige der zu erreichenden Fitpoints, Ladekreis während Video bufferd?
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +73,13 @@ public class ExercisePlayerActivity extends AppCompatActivity {
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
         toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
+        //Initialisieren Layoutelemente
         videoView = findViewById(R.id.exerciseSport_videoView);
         titleView = findViewById(R.id.exerciseSport_title);
         descriptionView = findViewById(R.id.exerciseSport_description);
         mediaController = new MediaController(this);
+
+        //Datenbank
         exHelper = new ExerciseDBHelper();
 
     }
@@ -80,6 +87,8 @@ public class ExercisePlayerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //Wenn keine WLAN Verbindung besteht, wir ein Alert-Dialog angezeigt (Video wird gestramt -> hoher Datenverbrauch)
         if (!isConnected(this)) {
             showAlertDialog(ALERT_WIFI);
         } else {
@@ -96,6 +105,7 @@ public class ExercisePlayerActivity extends AppCompatActivity {
         }
     }
 
+    //Auslesen der Übung aus dem Intent
     private void getExercise() {
         videoView.setVideoPath(getIntent().getExtras().getString(exHelper.DB_EXERCISEURL));
         titleView.setText(getIntent().getExtras().getString(exHelper.DB_EXERCISETITLE));
@@ -105,6 +115,7 @@ public class ExercisePlayerActivity extends AppCompatActivity {
         exName = getIntent().getExtras().getString(exHelper.DB_EXERCISETITLE);
     }
 
+    //Abfrage, ob WLAN Verbindung besteht
     private boolean isConnected(ExercisePlayerActivity activity) {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -119,9 +130,11 @@ public class ExercisePlayerActivity extends AppCompatActivity {
         }
     }
 
+    //Alert-Dialoge
     private void showAlertDialog(String alertDialog) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        //WIFI Alert-Dialog
         if(alertDialog.equals(ALERT_WIFI)) {
             builder.setMessage(R.string.connection_connectToWifi)
                     .setCancelable(true)
@@ -140,6 +153,7 @@ public class ExercisePlayerActivity extends AppCompatActivity {
                         }
                     }).show();
         }
+        //Video beendet Alert-Dialog
         if(alertDialog.equals(ALERT_FINISHEDVIDEO)) {
             builder.setMessage(R.string.alert_videoEnd)
                     .setCancelable(true)
@@ -161,6 +175,7 @@ public class ExercisePlayerActivity extends AppCompatActivity {
         }
     }
 
+    //Wenn Video beendet und dies in Alert-Dialog bestätigt, wird das Video in der History des jeweiligen Nutzers gespeichert.
     private void setExerciseInHistory() {
         Map<String, String> exerciseToHistory = new HashMap<>();
         DatabaseReference database = userDBHelper.getDatabase();

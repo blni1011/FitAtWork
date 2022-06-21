@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,12 +50,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static int fitPoints;
 
+    /*
+    MainActivity:
+    Anzeige des Logos sowie des Zitat des Tages
+    Navigation zu Übungen, Leaderboard etc. über NavigationDrawer (einzelne Menüpunkte sind je nach Stand ein- oder ausgeblendet
+    Wenn User eingeloggt, anzeige der Fitpoints in der Toolbar
+    Logik zum Auslesen der Punkte sowie der Zitate
+     */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Layout Elemente
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         headerGreetingsTextView = findViewById(R.id.header_greetings);
         zitatTextView = findViewById(R.id.textMainMenu);
 
-        // init header text view
+        //Initialisierung des HeaderViews
         View headerView = navigationView.getHeaderView(0);
         usernameTextView = (TextView) headerView.findViewById(R.id.NameHeader);
         headerGreetingsTextView = (TextView) headerView.findViewById(R.id.header_greetings);
@@ -73,8 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //DBs
         userDB = new UserDBHelper();
         zitateDB = new ZitateDBHelper();
-
-
 
         //Toolbar
         setSupportActionBar(toolbar);
@@ -104,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_exercises:
-                Intent intent_exercises = new Intent(this, ExerciseActivity.class);
+                Intent intent_exercises = new Intent(this, ExerciseSportActivity.class);
                 startActivity(intent_exercises);
                 break;
             case R.id.nav_history:
@@ -113,14 +121,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_stats:
                 Intent intent_stats = new Intent(this, LeaderboardActivity.class);
-                if(dbUser != null) {
+                if (dbUser != null) {
                     intent_stats.putExtra("leaderboardActive", dbUser.isLeaderboardActive());
                 }
                 startActivity(intent_stats);
                 break;
             case R.id.nav_profile:
                 Intent intent_profile = new Intent(this, ProfileActivity.class);
-                if(dbUser != null) {
+                if (dbUser != null) {
                     intent_profile.putExtra("user", dbUser);
                 }
                 startActivity(intent_profile);
@@ -133,6 +141,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
                     mAuth.signOut();
+                    Toast.makeText(this, R.string.success_logout, Toast.LENGTH_SHORT).show();
+                    //NAVDrawer ein/ ausblenden einzelner Menüpunkte
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    fitpointsTextView.setVisibility(View.INVISIBLE);
+                    usernameTextView.setVisibility(View.INVISIBLE);
+                    headerGreetingsTextView.setText(R.string.header_greetingLoggedOut);
+                    navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_profile).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_stats).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_login).setVisible(true);
                 }
                 break;
             case R.id.nav_settings:
@@ -145,28 +163,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         //Auslesen diverser Daten aus den Datenbanken
         getData();
 
-
+        //Befüllen des Namenfelds im Headerview, wenn User eingeloggt
         FirebaseUser fbUser = mAuth.getCurrentUser();
         if (fbUser != null) {
             headerGreetingsTextView.setText(R.string.header_greetingLoggedIn);
             usernameTextView.setText(fbUser.getDisplayName());
         } else {
-            Log.d("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
+            Log.i("Firebase", "Problem beim automatischen einloggen oder Nutzer nicht registriert!");
             fitpointsTextView.setVisibility(View.INVISIBLE);
             usernameTextView.setVisibility(View.INVISIBLE);
             headerGreetingsTextView.setText(R.string.header_greetingLoggedOut);
@@ -182,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //Auslesen einiger Live-Daten
     private void getData() {
         DatabaseReference database = userDB.getDatabase();
         FirebaseUser fbUser = mAuth.getCurrentUser();
@@ -215,9 +224,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         zitateDB.getDatabase().get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) {
+                if (dataSnapshot.exists()) {
                     zitateList.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String test = snapshot.getValue(String.class);
                         zitateList.add(test);
                     }
@@ -237,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //Erstellen User-Objekt
-        if(fbUser != null) {
+        if (fbUser != null) {
             dbUser = new User(fbUser.getDisplayName());
         }
     }

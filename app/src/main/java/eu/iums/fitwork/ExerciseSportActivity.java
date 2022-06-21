@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,9 +25,13 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class ExerciseSportActivity extends AppCompatActivity {
+    /**
+    ExerciseSportActivity:
+     Anzeige der einzelnen Übungen in einer CardView.
+     Übungen werden in Echtzeit aus Datenbank ausgelesen und angezeigt.
+     */
 
     private Toolbar toolbar;
-    private Button testButton;
 
     private ArrayList<Exercise> exercises;
 
@@ -63,10 +68,11 @@ public class ExerciseSportActivity extends AppCompatActivity {
         adapter = new SportExerciseRecyclerAdapter(this, exercises);
         recyclerView.setAdapter(adapter);
 
+        //Database
         exHelper = new ExerciseDBHelper();
         database = exHelper.getExerciseDatabase();
 
-        //Get ExerciseList from DB
+        //Liste der Übungen aus Datenbank auslesen
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,10 +82,12 @@ public class ExerciseSportActivity extends AppCompatActivity {
                     exercises.add(exercise);
                 }
                 adapter.notifyDataSetChanged();
+                Log.i("ExerciseSportActivity", "Auslesen der Übungen aus der Datenbank erfolgreich!");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.i("ExerciseSportActivity", "Fehler beim Auslesen der Übungen aus der Datenbank!");
 
             }
         });
