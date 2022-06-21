@@ -171,6 +171,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         Toast.makeText(this, "Pausenalarm ausgeschaltet", Toast.LENGTH_SHORT).show();
     }
 
+    //angezeigte Uhrzeit aktualisieren
     private void updateTimeText(Calendar c) {
         String timeText;
         timeText = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
@@ -179,6 +180,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         saveData();
     }
 
+    //Uhrzeit + Status des Switch speichern
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -189,13 +191,14 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         editor.apply();
     }
 
+    //Uhrzeit + Status des Switch laden
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         time = sharedPreferences.getString(SELECTED_TIME, "");
         break_state = sharedPreferences.getBoolean(SWITCH_ALARM, false);
     }
 
-
+    //gespeicherten Stand anzeigen
     public void updateViews() {
         selected_time.setText(time);
         switch_break.setChecked(break_state);
