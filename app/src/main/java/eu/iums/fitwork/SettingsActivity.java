@@ -72,9 +72,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
 
         notificationManager = NotificationManagerCompat.from(this);
         selected_time = (TextView) findViewById(R.id.selected_time);
-        selected_time_drink = (TextView) findViewById(R.id.selected_time_drink);
         selected_time.setVisibility(View.INVISIBLE);
-        selected_time_drink.setVisibility(View.INVISIBLE);
         createNotificationChannel();
 
         //Toolbar
@@ -85,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
         toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
-
+        //Zeit auswählen
         select_time = (Button) findViewById(R.id.select_time);
         select_time.setVisibility(View.INVISIBLE);
         select_time.setOnClickListener(new View.OnClickListener() {
@@ -98,18 +96,8 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             }
         });
 
-        select_time_drink = (Button) findViewById(R.id.select_time_drink);
-        select_time_drink.setVisibility(View.INVISIBLE);
-        select_time_drink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getFragmentManager(), "time picker drink");
 
-                saveData();
-            }
-        });
-
+        //Alarm an und aus stellen
         switch_break = (Switch) findViewById(R.id.switch_alert);
         switch_break.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -123,23 +111,6 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
                     isVisible_break = false;
                     select_time.setVisibility(View.INVISIBLE);
                     selected_time.setVisibility(View.INVISIBLE);
-                }
-                saveData();
-            }
-        });
-
-        switch_drink = (Switch) findViewById(R.id.switch_drink_reminder);
-        switch_drink.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!isVisible_drink){
-                    isVisible_drink = true;
-                    select_time_drink.setVisibility(View.VISIBLE);
-                    selected_time_drink.setVisibility(View.VISIBLE);
-                } else {
-                    isVisible_drink = false;
-                    select_time_drink.setVisibility(View.INVISIBLE);
-                    selected_time_drink.setVisibility(View.INVISIBLE);
                 }
                 saveData();
             }
@@ -162,6 +133,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         });
     }
 
+    //Benachrichtigung erstellen
     private void createNotificationChannel() {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -180,6 +152,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
 
     }
 
+    //Zeit einstellen
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar c = Calendar.getInstance();
@@ -196,19 +169,11 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             updateTimeText(c);
         }
 
+        //Kalendar
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, 0);
-
-        if (switch_drink.isChecked() && isVisible_drink){
-            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(this, AlertReceiver.class);
-            pendingIntentDrink = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_IMMUTABLE);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntentDrink);
-            Toast.makeText(this, "Trinkerinnerung erfolgreich gesetzt", Toast.LENGTH_SHORT).show();
-            updateTimeTextDrink(cal);
-        }
     }
 
     private void updateTimeText(Calendar c) {
@@ -232,9 +197,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(SELECTED_TIME, selected_time.getText().toString());
-        editor.putString(SELECTED_TIME_DRINK, selected_time_drink.getText().toString());
         editor.putBoolean(SWITCH_ALARM, switch_break.isChecked());
-        editor.putBoolean(SWITCH_ALARM_DRINK, switch_drink.isChecked());
 
         editor.apply();
     }
@@ -247,13 +210,13 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         drink_state = sharedPreferences.getBoolean(SWITCH_ALARM_DRINK, false);
     }
 
+
     public void updateViews() {
         selected_time.setText(time);
-        selected_time_drink.setText(timeDrink);
         switch_break.setChecked(break_state);
-        switch_drink.setChecked(drink_state);
     }
 
+    //Email als Feedback senden
     private void sendMail() {
         String recipientList = mEditTextTo.getText().toString();
         String[] recipients = recipientList.split(",");

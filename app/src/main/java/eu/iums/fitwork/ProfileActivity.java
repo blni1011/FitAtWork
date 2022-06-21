@@ -193,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onResume();
         usernameField.setText(fbUser.getDisplayName());
     }
-
+    //Hochladen des Profilbildes
     private void uploadProfilePicture(Uri imageuri) {
         storageReference.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -202,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Erhalte Daten zu FitPoints, Mail, Ranking, Name
     private void getData() {
         nameField.setText(dbUser.getName());
                         lastNameField.setText(dbUser.getLastName());

@@ -88,6 +88,7 @@ public class LeaderboardActivity extends AppCompatActivity{
             }
         });
     }
+    //Dialog falls man der Tielnahme am Leaderboard noch nicht zugestimmt hat
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_leaderboardInactive)

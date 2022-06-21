@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Loginprozess
     private void loginUser(String email, String password) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
