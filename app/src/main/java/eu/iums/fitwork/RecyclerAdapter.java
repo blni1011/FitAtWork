@@ -15,6 +15,12 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
+    /*
+    RecyclerAdpater:
+    Darstellung des Leaderboards in einem RecyclerView
+    Alle User werden als ArrayList übergeben
+     */
+
     Context context;
     ArrayList<User> users;
     private UserDBHelper userDB;
@@ -28,12 +34,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //Laden des CardView zur Darstellung der einzelnen User
         View v = LayoutInflater.from(context).inflate(R.layout.userslist_leaderboard, parent, false);
         return new RecyclerViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+        //Es werden nur User angezeigt, die das Leaderboard aktiviert haben. Auslesen der Darten aus dem Userobjekt
         User user = users.get(position);
         if(user.isLeaderboardActive()) {
             holder.username.setText(user.getUsername());
@@ -50,6 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
+        //Initialisierung TextViews
         TextView username;
         TextView fitPoints;
         TextView rank;

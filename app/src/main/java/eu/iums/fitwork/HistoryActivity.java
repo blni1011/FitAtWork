@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity{
-    /**
+    /*
      * HistoryActivity:
      * Anzeige der persönlichen Übungs-History des Users
      * Anzeige als CardView mit Hilfe des Layouts aus der Übungsanzeige

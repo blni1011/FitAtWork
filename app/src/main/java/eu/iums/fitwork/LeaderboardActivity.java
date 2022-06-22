@@ -25,6 +25,12 @@ import java.util.Comparator;
 
 public class LeaderboardActivity extends AppCompatActivity{
 
+    /*
+    LeaderboardActivity:
+    Auslesen der User als Userobjekt aus Datenbank -> RealTime
+    Übergeben an Adapter als ArrayList
+     */
+
     Toolbar toolbar;
 
     RecyclerView recyclerView;
@@ -47,6 +53,7 @@ public class LeaderboardActivity extends AppCompatActivity{
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
         toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
+        //Abfrage: Nimmt Nutzer an Leaderboard teil? Wenn nein, wird AlertDialog angezeigt
         if(!getIntent().getBooleanExtra("leaderboardActive", false)) {
             showAlertDialog();
         }
@@ -62,7 +69,7 @@ public class LeaderboardActivity extends AppCompatActivity{
         recyclerView.setAdapter(recyclerAdapter);
 
 
-        //Get Userslist from DB
+        //Auslesen der User aus der Datenbank und sortieren (höchste Punktzahl vorne)
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -88,6 +95,8 @@ public class LeaderboardActivity extends AppCompatActivity{
             }
         });
     }
+
+    //AlertDialog wenn die Teilnahme am Leaderboard nicht aktiviert
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_leaderboardInactive)

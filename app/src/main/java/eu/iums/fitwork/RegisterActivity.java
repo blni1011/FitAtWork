@@ -19,6 +19,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
+    /*
+    RegisterActivity:
+    Activity zum registrieren neuer User
+    Abfrage diverser Daten (ua gewünschter Username, Email, Passwort, Vor und NAchname)
+    Überprüfung ob Email Adresse existiert
+    Doppelte Abfrage des Passworts um eine falsche Eingabe abzufangen
+     */
 
     TextView registerButton;
     EditText name;
@@ -42,8 +49,10 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
+        //User DB
         dbhelper = new UserDBHelper();
 
+        //Initialisierung TextViews
         name = findViewById(R.id.name);
         lastName = findViewById(R.id.lastname);
         username = findViewById(R.id.username);
@@ -51,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         repeatPassword = findViewById(R.id.repeatPassword);
 
+        //ClickListener RegisterButton
         registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (repeatPassword.getText().toString().matches(password.getText().toString())) {
                     //User registrieren
                     if (firebaseUser == null) {
+                        //Registrieren in FirebaseAuthentication und anlegen des Users in Firebase RealtimeDatabase
                         registerUser(email.getText().toString(), password.getText().toString());
                         dbhelper.writeNewUser(username.getText().toString(), name.getText().toString(), lastName.getText().toString(), email.getText().toString());
                         Log.d("Firebase", "anlegen des Users in der Dqatenbank erfolgreich!");
@@ -100,7 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Registrieren des Users in FirebaseAuthentication
+    //TODO: RealtimeDB Registrierung in onComplete?
     private void registerUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

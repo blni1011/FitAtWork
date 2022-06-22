@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class ExerciseSportActivity extends AppCompatActivity {
-    /**
+    /*
     ExerciseSportActivity:
      Anzeige der einzelnen Übungen in einer CardView.
      Übungen werden in Echtzeit aus Datenbank ausgelesen und angezeigt.

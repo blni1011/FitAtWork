@@ -18,6 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
+    /*
+    LoginActivity:
+    Activity zum einloggen in das Nutzerkonto.
+    Button zum Passwort zurücksetzen und zum Registrieren, wenn kein Profil besteht
+     */
 
     Toolbar toolbar;
     private FirebaseAuth mAuth;
@@ -47,10 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         //FirebaseAuthentication
         mAuth = FirebaseAuth.getInstance();
 
+        //Einloggen-Button
         signIn = findViewById(R.id.sign_in);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Einloggen mit EMail Adresse und Passwort
                 username = findViewById(R.id.username);
                 password = findViewById(R.id.password);
                 loginUser(username.getText().toString(), password.getText().toString());
@@ -58,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Passwort vegessen Button -> Versand einer E-Mail an hinterlegte Adresse zum zurücksetzen des Passworts
         forgot_password = findViewById(R.id.forgot_password);
         forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Button Registrieren, RegisterActivity wird geöffnet
         register = findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +90,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Einloggen des Users mit Hilfe von FirebaseAuthentication
     private void loginUser(String email, String password) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        //Einloggen nur möglich, wenn nicht bereits eingeloggt
         if(currentUser == null) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

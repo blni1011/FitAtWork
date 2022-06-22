@@ -15,10 +15,16 @@ import java.util.Date;
 
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.RecyclerViewHolder>{
 
+    /*
+    HistoryRecyclerAdapter:
+    Adapter RecyclerView zur Darstellung der History
+     */
+
     Context context;
     ArrayList<String> exercises;
     ArrayList<String> times;
 
+    //Übungen und der Zeitpunkt, an dem diese ausgeführt werden, werden als ArrayList übergeben
     public HistoryRecyclerAdapter(Context context, ArrayList<String> exercises, ArrayList<String> times) {
         this.context = context;
         this.exercises = exercises;
@@ -28,12 +34,15 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
     @NonNull
     @Override
     public HistoryRecyclerAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        //CardView zur Darstellung der einzelnen abgschlossenen Übungen
         View v = LayoutInflater.from(context).inflate(R.layout.exercise_cardview, parent, false);
         return new RecyclerViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HistoryRecyclerAdapter.RecyclerViewHolder holder, int position) {
+        //Auslesen der Übungen und Zeiten und setzen der TextViews im CardView
         String exerciseName = exercises.get(position);
         String time = times.get(position);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -51,6 +60,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
+        //Definition TextViews
         TextView titleView;
         TextView fitpointsView;
         TextView categoryView;

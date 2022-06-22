@@ -38,6 +38,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
+    /*
+    ProfileActivity:
+    Darstellung der gespeicherten Nutzerdaten (Name, Nachname, etc.)
+    Anzeige der aktuellen Fitpoints
+    Möglichkeit zum Ändern des Profilbilds sowie des Namen
+    Switch zur Teilnahme am Leaderboard
+    Passwort zurücksetzen auch hier möglich
+     */
 
     Toolbar toolbar;
     private UserDBHelper userDBHelper;
@@ -67,8 +75,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        //Boolean wenn Profil ändern Button angewählt ist =true
         isEditable = false;
 
+        //Userobjekt aus Intent auslesen
         dbUser = new User();
         dbUser = getIntent().getParcelableExtra("user");
 
@@ -86,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference().child("users/" + fbUser.getDisplayName() + "/profile.jpg");
 
-
+        //TextViews/EditTexts
         usernameField = findViewById(R.id.profile_username);
         nameField = findViewById(R.id.profile_vorname);
         lastNameField = findViewById(R.id.profile_nachname);
@@ -120,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Laden der Daten
         getData();
 
-        //EditProfile ClickListener
+        //EditProfile ClickListener, nur wenn Profil ändern Button ausgewählt, können EditTexts editiert werden.
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        //Passwortvergessen Button
+        //Passwortvergessen Button, EMail zum Zurücksetzen des Passworts über FirebaseAuthentication
         forgotPasswordField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,6 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
         usernameField.setText(fbUser.getDisplayName());
     }
 
+    //Upload des neuen Profilbilds nach Änderung in FirebaseStorage
     private void uploadProfilePicture(Uri imageuri) {
         storageReference.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -202,7 +213,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Auslesen der Nutzerdaten aus dem Userobjekt
     private void getData() {
         nameField.setText(dbUser.getName());
                         lastNameField.setText(dbUser.getLastName());

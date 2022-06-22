@@ -15,11 +15,16 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.ArrayList;
 
 public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExerciseRecyclerAdapter.RecyclerViewHolder>{
+    /*
+    SportExerciseRecyclerAdapter:
+    Adapter für RecyclerView um Übungen darzustellen
+     */
 
     Context context;
     ArrayList<Exercise> exercises;
     ExerciseDBHelper exHelper;
 
+    //Übungen werden als ArrayList übergeben
     public SportExerciseRecyclerAdapter(Context context, ArrayList<Exercise> exercises) {
         this.context = context;
         this.exercises = exercises;
@@ -29,12 +34,14 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //CardView um einzelne Übungen anzuzeigen
         View v = LayoutInflater.from(context).inflate(R.layout.exercise_cardview, parent, false);
         return new RecyclerViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SportExerciseRecyclerAdapter.RecyclerViewHolder holder, int position) {
+        //Auslesen der einzelnen Übungen und setzen der Textviews
         Exercise exercise = exercises.get(position);
 
         holder.titleView.setText(exercise.getTitle());
@@ -63,6 +70,7 @@ public class SportExerciseRecyclerAdapter extends RecyclerView.Adapter<SportExer
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        //Initialiseren TextViews
 
         TextView titleView;
         TextView fitpointsView;

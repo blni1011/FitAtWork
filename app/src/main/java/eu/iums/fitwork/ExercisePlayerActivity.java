@@ -28,7 +28,7 @@ import java.util.Map;
 
 
 public class ExercisePlayerActivity extends AppCompatActivity {
-    /**
+    /*
     Abspielen der Übungen, diese werden als Intent übergeben
      Wenn Video beendet wird ein Alert-Dialog angezeigt, in dem das Video erneut gestartet oder beendet wird.
      Wenn keine WLAN-Verbindung besteht, wird ein AlertDialog angezeigt, in dem die Nachricht ignoriert oder in die Systemeinstellungen gewechselt werden kann.
