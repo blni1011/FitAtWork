@@ -13,11 +13,16 @@ import com.squareup.picasso.Picasso;
 
 
 public class UserDBHelper {
+    /*
+    UserDBHelper Klasse:
+    verwaltet User Datenbank
+     */
 
     private final FirebaseDatabase database;
     private final DatabaseReference mDatabase;
     private StorageReference storageReference;
 
+    //"childs" in Datenbank, von allen anderen Klassen sichtbar und nutzbar
     public final String DB_FITPOINTS = "fitPoints";
     public final String DB_NAME = "name";
     public final String DB_LASTNAME = "lastName";
@@ -34,12 +39,14 @@ public class UserDBHelper {
 
     }
 
+    //Schreiben des Userobjekts in die Datenbank bei Registrierung
     public void writeNewUser(String username, String name, String lastname, String email) {
         user = new User(username, name, lastname, email);
 
         mDatabase.child(username).setValue(user);
     }
 
+    //Laden des Profilbilds in ein übergebenes ShapeableImageView
     public void getProfilePicture(String userName, ShapeableImageView imageView) {
         storageReference = FirebaseStorage.getInstance().getReference().child("users/" + userName + "/profile.jpg");
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -52,7 +59,7 @@ public class UserDBHelper {
             }
         });
     }
-
+    //Zurückgeben der DatabaseReference um auch in anderen Klassen Realtime Daten abzufragen
     public DatabaseReference getDatabase() {
         return mDatabase;
     }
