@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent_stats = new Intent(this, LeaderboardActivity.class);
                 if (dbUser != null) {
                     intent_stats.putExtra("leaderboardActive", dbUser.isLeaderboardActive());
+                    intent_stats.putExtra("user", dbUser);
                 }
                 startActivity(intent_stats);
                 break;
@@ -151,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationView.getMenu().findItem(R.id.nav_profile).setVisible(false);
                     navigationView.getMenu().findItem(R.id.nav_stats).setVisible(false);
                     navigationView.getMenu().findItem(R.id.nav_login).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_history).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_exercises).setVisible(false);
                 }
                 break;
             case R.id.nav_settings:
@@ -185,8 +188,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_profile).setVisible(false);
             menu.findItem(R.id.nav_stats).setVisible(false);
+            menu.findItem(R.id.nav_history).setVisible(false);
+            menu.findItem(R.id.nav_exercises).setVisible(false);
         } else {
             menu.findItem(R.id.nav_login).setVisible(false);
+            menu.findItem(R.id.nav_logout).setVisible(true);
+            menu.findItem(R.id.nav_profile).setVisible(true);
+            menu.findItem(R.id.nav_stats).setVisible(true);
+            menu.findItem(R.id.nav_history).setVisible(true);
+            menu.findItem(R.id.nav_exercises).setVisible(true);
         }
     }
 

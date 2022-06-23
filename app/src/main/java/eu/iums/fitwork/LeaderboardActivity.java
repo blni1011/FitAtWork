@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +41,8 @@ public class LeaderboardActivity extends AppCompatActivity{
 
     private TextView toolbarFitpointsField;
 
+    private User dbUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,47 +56,50 @@ public class LeaderboardActivity extends AppCompatActivity{
         toolbarFitpointsField = findViewById(R.id.toolbar2_fitpoints);
         toolbarFitpointsField.setText(String.valueOf(MainActivity.getFitPoints()));
 
+        dbUser = getIntent().getParcelableExtra("user");
+
         //Abfrage: Nimmt Nutzer an Leaderboard teil? Wenn nein, wird AlertDialog angezeigt
         if(!getIntent().getBooleanExtra("leaderboardActive", false)) {
             showAlertDialog();
-        }
+        } else {
 
-        //RecyclerView
-        recyclerView = findViewById(R.id.leaderboard_list);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            //RecyclerView
+            recyclerView = findViewById(R.id.leaderboard_list);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");
-        users = new ArrayList<>();
-        recyclerAdapter = new RecyclerAdapter(this, users);
-        recyclerView.setAdapter(recyclerAdapter);
+            database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app").getReference("user");
+            users = new ArrayList<>();
+            recyclerAdapter = new RecyclerAdapter(this, users);
+            recyclerView.setAdapter(recyclerAdapter);
 
 
-        //Auslesen der User aus der Datenbank und sortieren (höchste Punktzahl vorne)
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                users.clear();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    User user = dataSnapshot.getValue(User.class);
-                    if(user.isLeaderboardActive()) {
-                        users.add(user);
-                    }
-                    Collections.sort(users, new Comparator<User>() {
-                        @Override
-                        public int compare(User user1, User user2) {
-                            return Integer.valueOf(user2.getFitPoints()).compareTo(user1.getFitPoints());
+            //Auslesen der User aus der Datenbank und sortieren (höchste Punktzahl vorne)
+            database.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    users.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        User user = dataSnapshot.getValue(User.class);
+                        if (user.isLeaderboardActive()) {
+                            users.add(user);
                         }
-                    });
+                        Collections.sort(users, new Comparator<User>() {
+                            @Override
+                            public int compare(User user1, User user2) {
+                                return Integer.valueOf(user2.getFitPoints()).compareTo(user1.getFitPoints());
+                            }
+                        });
+                    }
+                    recyclerAdapter.notifyDataSetChanged();
                 }
-                recyclerAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     //AlertDialog wenn die Teilnahme am Leaderboard nicht aktiviert
@@ -104,7 +110,9 @@ public class LeaderboardActivity extends AppCompatActivity{
                 .setPositiveButton("Profileinstellungen", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(LeaderboardActivity.this, ProfileActivity.class));
+                        Intent intent = new Intent(LeaderboardActivity.this, ProfileActivity.class);
+                        intent.putExtra("user", dbUser);
+                        startActivity(intent);
                     }
                 }).setNegativeButton("Zurück", new DialogInterface.OnClickListener() {
                     @Override

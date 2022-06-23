@@ -103,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Toast.makeText(LoginActivity.this, "Eingeloggt als " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
                             } else {
                                 Toast.makeText(LoginActivity.this, "Fehler beim Einloggen!", Toast.LENGTH_SHORT).show();
                             }

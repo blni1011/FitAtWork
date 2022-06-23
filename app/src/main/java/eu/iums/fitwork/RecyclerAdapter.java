@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -41,14 +42,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        //Es werden nur User angezeigt, die das Leaderboard aktiviert haben. Auslesen der Darten aus dem Userobjekt
-        User user = users.get(position);
-        if(user.isLeaderboardActive()) {
-            holder.username.setText(user.getUsername());
-            holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
-            holder.rank.setText(String.valueOf(position + 1));
-            userDB.getProfilePicture(user.getUsername(), holder.profilepic);
-        }
+        //Es werden nur User angezeigt, die das Leaderboard aktiviert haben. Auslesen der Daten aus dem Userobjekt
+            User user = users.get(position);
+            if (user.isLeaderboardActive()) {
+                holder.username.setText(user.getUsername());
+                holder.fitPoints.setText(String.valueOf(user.getFitPoints()));
+                holder.rank.setText(String.valueOf(position + 1));
+                userDB.getProfilePicture(user.getUsername(), holder.profilepic);
+            }
     }
 
     @Override
