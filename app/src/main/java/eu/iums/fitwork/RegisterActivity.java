@@ -63,6 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         //ClickListener RegisterButton
         registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
+
+            //Fehlermeldungen
             @Override
             public void onClick(View v) {
                 if (name.getText().toString().matches("")) {

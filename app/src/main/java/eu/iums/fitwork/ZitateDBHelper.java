@@ -16,7 +16,7 @@ public class ZitateDBHelper {
     private final DatabaseReference mDatabase;
 
 
-
+    //Weisheit auf Startseite
     public ZitateDBHelper() {
         database = FirebaseDatabase.getInstance("https://fitatwork-6adb0-default-rtdb.europe-west1.firebasedatabase.app");
         mDatabase = database.getReference("zitate");
