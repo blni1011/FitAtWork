@@ -30,4 +30,8 @@
     <string name="alert_videoEnd">Das Übungsvideo ist zu Ende. Möchtest Du das Video nochmals ansehen oder zurück zur Übersicht? Deine Punkte werden dir erst gutgeschrieben, wenn du zurück zur Übersicht kehrst.</string>
     <string name="success_logout">Erfolgreich ausgeloggt!</string>
     <string name="alert_leaderboardInactive">Du hast der Teilnahme am Leaderboard noch nicht zugestimmt. Wenn du eingeloggt bist, kannst du im Menüpunkt "Profil" der Teilnahme am Leaderboard zustimmen.</string>
+    <string name="failure_emailadresswrong">Falsche E-Mail Adresse.</string>
+    <string name="failure_emailAdressDoesntExist">E-Mail Adresse existiert nicht.</string>
+    <string name="login_sendPasswortResetMail">E-Mail zum Zurücksetzen des Passworts gesendet!</string>
+    <string name="login_enterEmailAdress">Bitte E-Mailadresse eingeben.</string>
 </resources>
