@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +19,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
     /*
@@ -39,6 +46,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
+
+    private boolean userExists;
+
+    private ArrayList<String> userNameList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +109,12 @@ public class RegisterActivity extends AppCompatActivity {
                     if (firebaseUser == null) {
                         //Registrieren in FirebaseAuthentication und anlegen des Users in Firebase RealtimeDatabase
                         registerUser(email.getText().toString(), password.getText().toString());
-                        dbhelper.writeNewUser(username.getText().toString(), name.getText().toString(), lastName.getText().toString(), email.getText().toString());
-                        Log.d("Firebase", "anlegen des Users in der Dqatenbank erfolgreich!");
+                        Log.i("RegisterActivity", "Anlegen des Users in der Datenbank erfolgreich!");
+
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Dieser Benutzer exisitert bereits!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, R.string.failure_userAlreadyExistst, Toast.LENGTH_SHORT).show();
                     }
 
-                    Intent register = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(register);
                 } else {
                     Toast.makeText(getBaseContext(), "Ihre Passwörter stimmen nicht überein.", Toast.LENGTH_SHORT).show();
                     return;
@@ -113,8 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
     //Registrieren des Users in FirebaseAuthentication
-    //TODO: RealtimeDB Registrierung in onComplete?
     private void registerUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -129,7 +138,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Log.d("Firebase", "Registrierung auf Firebase und setzen des Username erfolgreich!");
+                                    dbhelper.writeNewUser(username.getText().toString(), name.getText().toString(), lastName.getText().toString(), email);
                                     Toast.makeText(RegisterActivity.this, "Registrierung erfolgreich, " + firebaseUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+                                    Intent register = new Intent(RegisterActivity.this, MainActivity.class);
+                                    register.putExtra("registered", true);
+                                    register.putExtra("username", username.getText().toString());
+                                    startActivity(register);
                                 }
                             });
                         } else {

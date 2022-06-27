@@ -53,9 +53,6 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     public static final String SWITCH_ALARM = "switch_alarm";
 
 
-
-    //TODO: Entfernen des Leaderboard-Teilnahme-Switch
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

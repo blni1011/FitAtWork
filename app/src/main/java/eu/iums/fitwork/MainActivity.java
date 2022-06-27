@@ -184,19 +184,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         //Ausblenden von Items im Nav-Drawer.
         Menu menu = navigationView.getMenu();
-        if (mAuth.getCurrentUser() == null) {
-            menu.findItem(R.id.nav_logout).setVisible(false);
-            menu.findItem(R.id.nav_profile).setVisible(false);
-            menu.findItem(R.id.nav_stats).setVisible(false);
-            menu.findItem(R.id.nav_history).setVisible(false);
-            menu.findItem(R.id.nav_exercises).setVisible(false);
-        } else {
+
+        if(mAuth.getCurrentUser() != null || getIntent().getBooleanExtra("registered", false)) {
             menu.findItem(R.id.nav_login).setVisible(false);
             menu.findItem(R.id.nav_logout).setVisible(true);
             menu.findItem(R.id.nav_profile).setVisible(true);
             menu.findItem(R.id.nav_stats).setVisible(true);
             menu.findItem(R.id.nav_history).setVisible(true);
             menu.findItem(R.id.nav_exercises).setVisible(true);
+            if(getIntent().getStringExtra("username") != null) {
+                headerGreetingsTextView.setText("Hallo, "+ getIntent().getStringExtra("username"));
+            }
+        } else {
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_profile).setVisible(false);
+            menu.findItem(R.id.nav_stats).setVisible(false);
+            menu.findItem(R.id.nav_history).setVisible(false);
+            menu.findItem(R.id.nav_exercises).setVisible(false);
         }
     }
 
@@ -227,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //Zitate
-        //TODO: Backup wenn keine Internetverbindung besteht, case überlegen.
         ArrayList<String> zitateList = new ArrayList<>();
         Random random = new Random();
 

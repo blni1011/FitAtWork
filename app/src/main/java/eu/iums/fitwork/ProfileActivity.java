@@ -226,7 +226,6 @@ public class ProfileActivity extends AppCompatActivity {
     private void updateUser(String username, String name, String lastName, String email, boolean leaderboard) {
         DatabaseReference database = userDBHelper.getDatabase();
 
-        //TODO: EMail auch in FBAuth ändern.
 
         Map<String, Object> updateChildren = new HashMap<>();
         updateChildren.put("/" + username + "/" + userDBHelper.DB_NAME, name);

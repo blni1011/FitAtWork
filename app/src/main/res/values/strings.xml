@@ -34,4 +34,5 @@
     <string name="failure_emailAdressDoesntExist">E-Mail Adresse existiert nicht.</string>
     <string name="login_sendPasswortResetMail">E-Mail zum Zurücksetzen des Passworts gesendet!</string>
     <string name="login_enterEmailAdress">Bitte E-Mailadresse eingeben.</string>
+    <string name="failure_userAlreadyExistst">Dieser Benutzername ist bereits vergeben.</string>
 </resources>
